@@ -1,0 +1,20 @@
+{
+  "name": "typescript-javascript-combination",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "parcel-bundler": "^1.6.2",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
+  },
+  "scripts": {
+    "start": "parcel public/index.html -p 3001 --open",
+    "build": "parcel build public/index.html --public-url ./"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-1": "^6.24.1",
+    "typescript": "^2.7.2"
+  }
+}

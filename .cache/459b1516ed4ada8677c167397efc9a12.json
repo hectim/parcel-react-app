@@ -1,0 +1,1 @@
+{"dependencies":[{"name":"_css_loader"}],"generated":{"css":"body {\n  margin: 0;\n  padding: 0;\n  font-family: sans-serif;\n}\n","js":"\n        var reloadCSS = require('_css_loader');\n        module.hot.dispose(reloadCSS);\n        module.hot.accept(reloadCSS);\n      "},"hash":"844164e5e138728ff281656df7a7d0da","cacheData":{}}
