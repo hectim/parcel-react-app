@@ -1,28 +1,50 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./App";
-import registerServiceWorker from "./registerServiceWorker";
-
-import { createStore, applyMiddleware, compose } from "redux";
-import createSagaMiddleware from "redux-saga";
 import { Provider } from "react-redux";
+import { createStore, applyMiddleware, compose } from "redux";
+// import createSagaMiddleware from "redux-saga";
+import { createEpicMiddleware } from 'redux-observable';
 
-import { reducer } from "./redux";
-import { watcherSaga } from "./sagas";
+import { ApiReducer, RootState } from './redux';
+import { ApiAction } from './actions';
+import { RootEpic } from './observerable';
+import App from "./App";
+// import { watcherSaga } from "./sagas";
+import registerServiceWorker from "./registerServiceWorker";
+import "./index.css";
 
 // create the saga middleware
-const sagaMiddleware = createSagaMiddleware();
+// const sagaMiddleware = createSagaMiddleware();
 
-// dev tools middleware
-// const reduxDevTools =
-//   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
+const composeEnhancers = (
+  process.env.NODE_ENV === 'development' &&
+  window && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+) || compose;
 
-// create a redux store with our reducer above and middleware
-let store = createStore(reducer, applyMiddleware(sagaMiddleware));
+function configureStore(initialState?: RootState) {
+  // configure middlewares
+  const middlewares = [
+    createEpicMiddleware(RootEpic),
+    // sagaMiddleware,
+  ];
+  // compose enhancers
+  const enhancer = composeEnhancers(
+    applyMiddleware(...middlewares)
+  );
+  // create store
+  return createStore(
+    ApiReducer,
+    RootState!,
+    enhancer
+    );
+}
+
+// pass an optional param to rehydrate state on app start
+const store = configureStore();
 
 // run the saga
-sagaMiddleware.run(watcherSaga);
+// sagaMiddleware.run(watcherSaga);
+
 
 ReactDOM.render(
   <Provider store={store}>
