@@ -15,6 +15,11 @@
     "typescript": "^2.7.2"
   },
   "dependencies": {
+    "@types/lodash": "^4.14.104",
+    "@types/react": "^16.0.40",
+    "@types/react-dom": "^16.0.4",
+    "@types/react-redux": "^5.0.15",
+    "@types/rx": "^4.1.1",
     "axios": "^0.17.1",
     "lodash": "^4.17.5",
     "parcel-bundler": "^1.6.2",

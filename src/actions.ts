@@ -1,6 +1,6 @@
 import { $call } from 'utility-types';
 import { createAction } from 'typesafe-actions';
-import _ from 'lodash';
+import * as _ from 'lodash';
 
 export const generalActions = {
   request: createAction('REQUEST'),
