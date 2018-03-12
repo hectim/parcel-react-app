@@ -36,18 +36,20 @@ function apiCallFailure(error) {
  */
 
 /* === REDUCER === */
-
-type interface State {
-  fetching : boolean;
-  dog      : string;
-  error    : string;
-};
+export type State = {
+  readonly fetching : boolean;
+  readonly dog : string;
+  readonly error : string;
+}
 
 let state:State = {
   fetching: false;
   dog: null;
   error: null;
 }
+
+
+
 
 export function reducer(state: State, action: ActionTypes) {
   switch (action.type) {
