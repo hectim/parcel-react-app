@@ -6,8 +6,8 @@ import { RootState } from './redux';
 import { ApiAction, generalActions } from "./actions"
 
 const getDog: Epic<ApiAction, RootState> =
-  (action$, store) => actions$
-    .filter(isActionOf(ApiAction.request))
+  (action$, store) => action$
+    .filter(isActionOf(generalActions.request))
     .debounceTime(200)
     .flatMap(() => {
       return Observable

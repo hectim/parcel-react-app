@@ -4,10 +4,11 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
 // import createSagaMiddleware from "redux-saga";
 import { createEpicMiddleware } from 'redux-observable';
+import 'rxjs';
 
 import { ApiReducer, RootState } from './redux';
 import { ApiAction } from './actions';
-import { RootEpic } from './observerable';
+import { RootEpic } from './observable';
 import App from "./App";
 // import { watcherSaga } from "./sagas";
 import registerServiceWorker from "./registerServiceWorker";
