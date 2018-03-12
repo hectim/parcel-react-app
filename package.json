@@ -1,20 +1,31 @@
 {
-  "name": "typescript-javascript-combination",
+  "name": "redux-saga-beginner-tutorial",
+  "homepage": "https://github.io/redux-saga-beginner-tutorial",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "parcel-bundler": "^1.6.2",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0"
-  },
-  "scripts": {
-    "start": "parcel public/index.html -p 3001 --open",
-    "build": "parcel build public/index.html --public-url ./"
-  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-plugin-autobind-class-methods": "^5.0.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-1": "^6.24.1",
+    "react-scripts": "1.0.17",
     "typescript": "^2.7.2"
+  },
+  "dependencies": {
+    "axios": "^0.17.1",
+    "parcel-bundler": "^1.6.2",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2",
+    "redux-saga": "^0.16.0"
+  },
+  "scripts": {
+    "start": "PORT=3006 react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
   }
 }
