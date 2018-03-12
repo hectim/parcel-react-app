@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import MyComponent from './TypeScriptComponent'
 import './App.css';
+// import * as proto from '../protos/labels_pb.d.ts'
+import * as protoService from '../protos/labels_pb_service.ts'
 
 class App extends Component {
   render() {

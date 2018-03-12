@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package api.v0alpha;
+
+option go_package = "git.tcncloud.net/m/protos/api/v0alpha;v0alpha";
+
+import "google/api/annotations.proto";
+import "matrix/labels/labels.proto";
+
+service Labels{
+  rpc GetLabelsByName(Label) returns (stream Label) {
+    option (google.api.http).get = "/api/v0alpha/labels/name/{label_name}";
+  }
+  rpc GetLabelsByNode(Label) returns (stream Label) {
+    option (google.api.http).get = "/api/v0alpha/labels/node/{node_id}";
+  }
+  rpc AttachLabel(Label) returns (Label) {
+    option (google.api.http).post = "/api/v0alpha/labels/attach";
+    option (google.api.http).body = "*";
+  }
+  rpc RemoveLabel(Label) returns (Label) {
+    option (google.api.http).delete = "/api/v0alpha/labels/{node_id}/{label_name}";
+  }
+  rpc GetLabelsByOrg(Label) returns (stream Label) {
+    option (google.api.http).get = "/api/v0alpha/labels/org";
+  }
+}
+
+message Label{
+  //  string org_id = 1;
+  //  string region_id = 2;
+  string node_id = 3;
+  string label_name = 4;
+  matrix.labels.Type type = 10;
+}

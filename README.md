@@ -1,3 +1,25 @@
+# Parcel, Typescript, React, and gRPC Code Generation
+
+## Setup
+```bash
+npm i
+```    
+
+Now generate Typescript from your proto definitions:
+```bash
+protoc --plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts \
+  -I/usr/local/include \
+  -I. \
+  -I$GOPATH/src/git.tcncloud.net/m/protos/ \
+  -I$GOPATH/src/git.tcncloud.net/m/protos/matrix \
+  -I$GOPATH/src \
+  -I$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
+--ts_out=service=true:proto labels.proto
+```
+
+
+
+## Create React App Info
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
