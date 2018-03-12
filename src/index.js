@@ -34,7 +34,7 @@ function configureStore(initialState?: RootState) {
   // create store
   return createStore(
     ApiReducer,
-    RootState!,
+    initialState!,
     enhancer
     );
 }
