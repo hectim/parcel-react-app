@@ -9,7 +9,7 @@
       "es2016",
       "es2017.object"
     ],
-    "outDir": "dist2",
+    "outDir": "tsc_dist",
     "allowJs": true
   },
   "include": [

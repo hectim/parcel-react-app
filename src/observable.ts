@@ -1,7 +1,7 @@
 import { combineEpics, Epic } from 'redux-observable';
 import { isActionOf } from 'typesafe-actions';
 import { Observable } from 'rxjs/Observable';
-import axios from "axios";
+import * as axios from "axios";
 import { RootState } from './redux';
 import { ApiAction, generalActions } from "./actions";
 
