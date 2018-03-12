@@ -1,3 +1,4 @@
+import { $call } from 'utility-types';
 import {requestType, successType, failureType} from './types'
 export enum TypeKeys {
   REQUEST = 'API_CALL_REQUEST',
@@ -24,3 +25,9 @@ export = {
   apiCallFailure,
   TypeKeys,
 }
+
+
+
+
+const returnsOfActions = _.map(_.values(actions), $call));
+export type ApiAction = typeof returnsOfActions[number];
