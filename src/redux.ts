@@ -3,7 +3,7 @@
 import { combineReducers } from 'redux';
 import { getType } from 'typesafe-actions';
 
-import { ApiAction, apiCallRequest, apiCallSuccess, apiCallFailure } from './actions';
+import { ApiAction, generalActions } from './actions';
 
 
 /* === State === */
@@ -21,21 +21,21 @@ export type RootState = {
 export const ApiReducer = combineReducers<ApiState, ApiAction>({
   fetching: (state = false, action) => {
     switch (action.type) {
-      case getType(toggleFetching):
-        return !state 
+      case getType(generalActions.request):
+        return !state
       default: return state;
     }
   },
   error: (state = null, action) => {
     switch (action.type) {
-      case getType(apiFailure):
+      case getType(generalActions.failure):
         return [...state, action.payload];
       default: return state;
     }
   },
   dog: (state = null, action) => {
     switch (action.type) {
-      case getType(setDog):
+      case getType(generalActions.success):
         return [...state, action.payload];
       default: return state;
     }
