@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+import { GenericStoreEnhancer } from 'redux';
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose, GenericStoreEnhancer} from "redux";
 // import createSagaMiddleware from "redux-saga";
@@ -14,20 +15,29 @@ import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 import "./index.css";
 
-// create the saga middleware
-// const sagaMiddleware = createSagaMiddleware();
+// TODO: add redux dev tools
+let composeEnhancers: any = compose;
 
-const initialState: object = {};
+function configureStore(initialState?: RootState) {
+  // configure middlewares
+  const middlewares = [
+    createEpicMiddleware(RootEpic),
+    // sagaMiddleware,
+  ];
+  // compose enhancers
+  const enhancer = composeEnhancers(
+    applyMiddleware(...middlewares)
+  );
+  // create store
+  return createStore(
+    ApiReducer,
+    initialState!,
+    enhancer
+    );
+}
 
-const devToolsExtension: GenericStoreEnhancer = window['devToolsExtension'] ?
-  window['devToolsExtension']() : f => f;
-
-const store = createStore(ApiReducer,
-  compose(
-    applyMiddleware(createEpicMiddleware(RootEpic)),
-    devToolsExtension
-  ) as GenericStoreEnhancer
-);
+// pass an optional param to rehydrate state on app start
+const store = configureStore();
 
 // run the saga
 // sagaMiddleware.run(watcherSaga);

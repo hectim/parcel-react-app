@@ -4,6 +4,7 @@
     "strictFunctionTypes": false,
     "module": "commonjs",
     "strict": true,
+    "strictFunctionTypes": false,
     "jsx": "react",
     "lib": [
       "dom",
