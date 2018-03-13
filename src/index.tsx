@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+import { GenericStoreEnhancer } from 'redux';
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
 // import createSagaMiddleware from "redux-saga";
@@ -14,13 +15,8 @@ import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 import "./index.css";
 
-// create the saga middleware
-// const sagaMiddleware = createSagaMiddleware();
-
-const composeEnhancers = (
-  process.env.NODE_ENV === 'development' &&
-  window && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-) || compose;
+// TODO: add redux dev tools
+let composeEnhancers: any = compose;
 
 function configureStore(initialState?: RootState) {
   // configure middlewares

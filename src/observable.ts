@@ -1,6 +1,6 @@
 import { combineEpics, Epic } from 'redux-observable';
 import { isActionOf } from 'typesafe-actions';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import 'rxjs/add/observable/dom/ajax';
 import axios from "axios";
 import { RootState } from './redux';
@@ -12,10 +12,10 @@ const getDog: Epic<ApiAction, RootState> =
     .debounceTime(200)
     .flatMap(() => {
       return Observable
-        .ajax({crossDomain: true, url: 'https://dog.ceo/api/breeds/image/random'})
+        .ajax({crossDomain: true, method: 'GET', url: 'https://dog.ceo/api/breeds/image/random'})
         .map(res => {
           console.log('~~~~~ in apicall', res);
-          return res.data.message;
+          return res.response;
         })
         .map(dog => generalActions.success(dog))
         .catch(error => Observable.of(generalActions.failure(error)))
