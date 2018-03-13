@@ -10,13 +10,12 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-1": "^6.24.1",
-    "babel-preset-typescript": "^7.0.0-alpha.19",
-    "copyfiles": "^2.0.0",
     "react-scripts": "1.0.17",
     "typescript": "^2.7.2"
   },
   "dependencies": {
     "@types/lodash": "^4.14.104",
+    "@types/node": "^9.4.7",
     "@types/react": "^16.0.40",
     "@types/react-dom": "^16.0.4",
     "@types/react-redux": "^5.0.15",
@@ -36,11 +35,9 @@
     "utility-types": "^1.1.0"
   },
   "scripts": {
-    "start": "PORT=3006 react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "copy": "copyfiles src/**/*.css src/**/*.svg tsc_dist"
-
+    "start": "npm run start-tsc-watcher && npm run copy-to-tsc_dist && parcel public/index.html -p 3005 --open",
+    "start-tsc-watcher": "tsc -w &",
+    "build": "tsc && parcel build ./public/index.html --public-url ./",
+    "copy-to-tsc_dist": "cp -r src/*.css tsc_dist && cp -r src/*.svg tsc_dist"
   }
 }
