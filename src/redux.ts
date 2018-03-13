@@ -18,7 +18,7 @@ export type RootState = {
 };
 
 /* === REDUCER === */
-export const ApiReducer = combineReducers<ApiState, ApiAction>({
+export const ApiReducer = combineReducers<RootState>({
   fetching: (state = false, action) => {
     switch (action.type) {
       case getType(generalActions.request):
