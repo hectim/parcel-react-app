@@ -15,7 +15,7 @@ const getDog: Epic<ApiAction, RootState> =
         .ajax({crossDomain: true, method: 'GET', url: 'https://dog.ceo/api/breeds/image/random'})
         .map(res => {
           console.log('~~~~~ in apicall', res);
-          return res.response;
+          return 200;
         })
         .map(dog => generalActions.success(dog))
         .catch(error => Observable.of(generalActions.failure(error)))

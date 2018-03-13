@@ -9,8 +9,8 @@ import { ApiAction, generalActions } from './actions';
 /* === State === */
 export type ApiState = {
   readonly fetching: boolean;
-  readonly error: string | null;
-  readonly dog: string | null;
+  readonly error: string;
+  readonly dog: string;
 };
 
 export type RootState = {
@@ -26,17 +26,17 @@ export const ApiReducer = combineReducers<RootState>({
       default: return state;
     }
   },
-  error: (state = null, action) => {
+  error: (state = "", action) => {
     switch (action.type) {
       case getType(generalActions.failure):
         return [...state, action.payload];
       default: return state;
     }
   },
-  dog: (state = null, action) => {
+  dog: (state = "", action) => {
     switch (action.type) {
       case getType(generalActions.success):
-        return [...state, action.payload];
+        return action.payload;
       default: return state;
     }
   },

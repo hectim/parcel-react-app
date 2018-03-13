@@ -13,8 +13,8 @@ import "./App.css";
 
 interface StateFromProps {
   fetching: boolean;
-  dog: string|null;
-  error: string|null;
+  dog: string;
+  error: string;
 }
 
 interface DispatchFromProps {
@@ -24,6 +24,11 @@ interface DispatchFromProps {
 class App extends React.Component {
   render() {
     const { fetching, dog, error, onRequestDog } = this.props;
+    const img_src = logo;
+    if (dog != "") {
+      const img_src = dog;
+      console.log('in here', typeof dog)
+    }
     return (
       <div className="App">
         <header className="App-header">
