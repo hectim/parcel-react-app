@@ -1,6 +1,5 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { GenericStoreEnhancer } from 'redux';
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose, GenericStoreEnhancer} from "redux";
 // import createSagaMiddleware from "redux-saga";

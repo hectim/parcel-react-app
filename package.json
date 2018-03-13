@@ -11,6 +11,7 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-1": "^6.24.1",
     "babel-preset-typescript": "^7.0.0-alpha.19",
+    "copyfiles": "^2.0.0",
     "react-scripts": "1.0.17",
     "typescript": "^2.7.2"
   },
@@ -38,6 +39,8 @@
     "start": "PORT=3006 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "copy": "copyfiles src/**/*.css src/**/*.svg tsc_dist"
+
   }
 }
