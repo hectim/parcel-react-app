@@ -8,7 +8,7 @@ interface State {}
 class MyComponent extends React.Component<Props, State>{
   render() {
     return <div>
-      Hello {this.props.name}
+      Goodbye {this.props.name}
     </div>
   }
 }
