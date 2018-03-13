@@ -8,7 +8,6 @@ import { connect } from "react-redux";
 class App extends Component {
   render() {
     const { fetching, dog, onRequestDog, error } = this.props;
-    console.log('dog', dog)
 
     return (
       <div className="App">

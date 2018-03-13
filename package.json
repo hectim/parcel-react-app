@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@types/lodash": "^4.14.104",
+    "@types/node": "^9.4.7",
     "@types/react": "^16.0.40",
     "@types/react-dom": "^16.0.4",
     "@types/react-redux": "^5.0.15",
@@ -34,9 +35,7 @@
     "utility-types": "^1.1.0"
   },
   "scripts": {
-    "start": "PORT=3006 react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "start": "tsc && parcel public/index.html -p 3005 --open",
+    "build": "tsc && parcel build ./public/index.html --public-url ./"
   }
 }

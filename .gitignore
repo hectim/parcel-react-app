@@ -22,4 +22,5 @@ yarn-debug.log*
 yarn-error.log*
 
 /dist
+/tsc_dist
 /.cache
