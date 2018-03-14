@@ -15,6 +15,7 @@ import registerServiceWorker from "./registerServiceWorker";
 import "./index.css";
 
 // TODO: add redux dev tools
+//       https://github.com/zposten/react-starter-kit/blob/master/src/redux/store/configureStore.ts
 let composeEnhancers: any = compose;
 
 function configureStore(initialState?: RootState) {
@@ -44,7 +45,7 @@ const store = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <App parentPropsExample={"a prop"}/>
   </Provider>,
   document.getElementById("root")
 );

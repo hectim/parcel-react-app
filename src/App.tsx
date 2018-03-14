@@ -11,23 +11,65 @@ let logo = require('./logo.svg')
 import "./App.css";
 
 
-interface StateFromProps {
+interface PropsFromState {
   fetching: boolean;
   dog: string;
   error: string;
 }
 
-interface DispatchFromProps {
+interface PropsFromDispatch {
   onRequestDog: () => void;
+  // another example:
+  // onRequestDog: (value:string) => void;
 }
 
-class App extends React.Component {
+interface PropsFromComponent {
+  parentPropsExample: string
+}
+
+interface ComponentState {
+  localStateExample: string,
+}
+
+interface ReduxProps extends PropsFromState, PropsFromDispatch { }
+// interface InheretedProps extends PropsFromComponent, ComponentState {}
+// interface Props extends ReduxProps, InheretedProps {}
+interface Props extends ReduxProps, PropsFromComponent {}
+
+
+class App extends React.Component<ReduxProps, PropsFromComponent> {
+  // class App extends React.Component<ReduxProps, InheretedProps> {
+  constructor(props: Props) {
+    super(props);
+
+    // this.state = {
+    //   localStateExample: "initial"
+    // };
+
+    console.log('state from constructor: ', this.state);
+    this.handleClick = this.handleClick.bind(this)
+  }
+
+  componentWillReceiveProps() {
+    console.log('checkout the props:', this.props)
+    console.log('state from receiveprops: ', this.state);
+
+//     if (this.props.localStateExample != {
+//       this.setState({localStateExample: this.props.parentPropsExample});
+//     }
+  }
+
+  handleClick(e: React.FormEvent<HTMLButtonElement>): void {
+    console.log('clicked: ', e);
+  }
+
   render() {
+    console.log('render: ',this.props);
+    console.log('state from render: ', this.state);
     const { fetching, dog, error, onRequestDog } = this.props;
     const img_src = logo;
     if (dog != "") {
       const img_src = dog;
-      console.log('in here', typeof dog)
     }
     return (
       <div className="App">
@@ -49,20 +91,27 @@ class App extends React.Component {
         )}
 
         {error && <p style={{ color: "red" }}>Uh oh - something went wrong!</p>}
+       
+        <button onClick={this.handleClick}>Click me to simulate an event</button>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state: ApiState) => ({
-  fetching: state.fetching,
-  dog: state.dog,
-  error: state.error
-});
 
-const mapDispatchToProps = (dispatch: Dispatch<ApiState>) => bindActionCreators({
+function mapStateToProps(state: ApiState): PropsFromState {
+  return {
+    fetching: state.fetching,
+    dog: state.dog,
+    error: state.error
+  }
+};
+
+function mapDispatchToProps(dispatch: Dispatch<ApiState>): PropsFromDispatch {
+  return bindActionCreators({
   onRequestDog: () => dispatch(generalActions.request()),
-}, dispatch);
+  }, dispatch);
+}
 
-export default connect<StateFromProps, DispatchFromProps, { label: string }>(mapStateToProps, mapDispatchToProps)(App);
+export default connect<PropsFromState, PropsFromDispatch, PropsFromComponent>(mapStateToProps, mapDispatchToProps)(App);
 

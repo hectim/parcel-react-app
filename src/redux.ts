@@ -8,9 +8,9 @@ import { ApiAction, generalActions } from './actions';
 
 /* === State === */
 export type ApiState = {
-  readonly fetching: boolean;
-  readonly error: string;
-  readonly dog: string;
+  fetching: boolean;
+  error: string;
+  dog: string;
 };
 
 export type RootState = {
