@@ -8,9 +8,9 @@ import { ApiAction, generalActions } from './actions';
 
 /* === State === */
 export type ApiState = {
-  fetching: boolean;
-  error: string;
-  dog: string;
+  readonly fetching: boolean;
+  readonly error: string;
+  readonly dog: string;
 };
 
 export type RootState = {
@@ -29,7 +29,7 @@ export const ApiReducer = combineReducers<RootState>({
   error: (state = "", action) => {
     switch (action.type) {
       case getType(generalActions.failure):
-        return [...state, action.payload];
+        return action.payload;
       default: return state;
     }
   },

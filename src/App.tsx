@@ -2,6 +2,7 @@ import { Component } from "react";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch, bindActionCreators  } from 'redux';
+import * as _ from 'lodash';
 
 import { generalActions } from './actions';
 import { ApiState, RootState } from './redux';
@@ -27,45 +28,43 @@ interface PropsFromComponent {
   parentPropsExample: string
 }
 
-interface ComponentState {
-  localStateExample: string,
+interface ComponentLocalState {
+  readonly localStateExample: string,
+  readonly test: string,
 }
 
+
 interface ReduxProps extends PropsFromState, PropsFromDispatch { }
-// interface InheretedProps extends PropsFromComponent, ComponentState {}
-// interface Props extends ReduxProps, InheretedProps {}
 interface Props extends ReduxProps, PropsFromComponent {}
 
 
-class App extends React.Component<ReduxProps, PropsFromComponent> {
-  // class App extends React.Component<ReduxProps, InheretedProps> {
+class App extends React.Component<ReduxProps, PropsFromComponent | ComponentLocalState> {
+  state: ComponentLocalState;
   constructor(props: Props) {
     super(props);
 
-    // this.state = {
-    //   localStateExample: "initial"
-    // };
+    this.state = {
+      localStateExample: "money",
+      test: "yo",
+    };
 
-    console.log('state from constructor: ', this.state);
     this.handleClick = this.handleClick.bind(this)
   }
 
   componentWillReceiveProps() {
     console.log('checkout the props:', this.props)
-    console.log('state from receiveprops: ', this.state);
-
-//     if (this.props.localStateExample != {
-//       this.setState({localStateExample: this.props.parentPropsExample});
-//     }
   }
 
   handleClick(e: React.FormEvent<HTMLButtonElement>): void {
-    console.log('clicked: ', e);
+    if (this.state.localStateExample == 'money') {
+    this.setState({localStateExample: 'fame'});
+    }
+    else {
+      this.setState({localStateExample: 'money'});
+    }
   }
 
   render() {
-    console.log('render: ',this.props);
-    console.log('state from render: ', this.state);
     const { fetching, dog, error, onRequestDog } = this.props;
     const img_src = logo;
     if (dog != "") {
@@ -99,7 +98,8 @@ class App extends React.Component<ReduxProps, PropsFromComponent> {
 }
 
 
-function mapStateToProps(state: ApiState): PropsFromState {
+function mapStateToProps(state: ApiState, ownProps: PropsFromComponent): PropsFromState {
+  console.log('ownProps: ', ownProps)
   return {
     fetching: state.fetching,
     dog: state.dog,
