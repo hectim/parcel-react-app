@@ -5,6 +5,7 @@ import { createStore, applyMiddleware, compose, GenericStoreEnhancer} from "redu
 // import createSagaMiddleware from "redux-saga";
 import { createEpicMiddleware } from 'redux-observable';
 import 'rxjs';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { ApiReducer, RootState } from './redux';
 import { ApiAction } from './actions';
@@ -14,26 +15,24 @@ import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 import "./index.css";
 
-// TODO: add redux dev tools
-//       https://github.com/zposten/react-starter-kit/blob/master/src/redux/store/configureStore.ts
-let composeEnhancers: any = compose;
 
 function configureStore(initialState?: RootState) {
   // configure middlewares
   const middlewares = [
     createEpicMiddleware(RootEpic),
-    // sagaMiddleware,
   ];
-  // compose enhancers
-  const enhancer = composeEnhancers(
+
+  // compose enhancers with dev tools
+  const enhancer = composeWithDevTools(compose(
     applyMiddleware(...middlewares)
-  );
+  ));
+
   // create store
   return createStore(
     ApiReducer,
     initialState!,
     enhancer
-    );
+  );
 }
 
 // pass an optional param to rehydrate state on app start
