@@ -2,7 +2,6 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose, GenericStoreEnhancer} from "redux";
-// import createSagaMiddleware from "redux-saga";
 import { createEpicMiddleware } from 'redux-observable';
 import 'rxjs';
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -11,13 +10,12 @@ import { ApiReducer, RootState } from './redux';
 import { ApiAction } from './actions';
 import { RootEpic } from './observable';
 import App from "./App";
-// import { watcherSaga } from "./sagas";
 import registerServiceWorker from "./registerServiceWorker";
 import "./index.css";
 
 
 function configureStore(initialState?: RootState) {
-  // configure middlewares
+  // configure middleware
   const middlewares = [
     createEpicMiddleware(RootEpic),
   ];
@@ -35,12 +33,16 @@ function configureStore(initialState?: RootState) {
   );
 }
 
-// pass an optional param to rehydrate state on app start
 const store = configureStore();
 
-// run the saga
-// sagaMiddleware.run(watcherSaga);
 
+// Hot reload reducers
+if (module.hot) {
+  module.hot.accept(() => {
+    const nextReducer = require('./redux').ApiReducer;
+    store.replaceReducer(nextReducer);
+  })
+}
 
 ReactDOM.render(
   <Provider store={store}>

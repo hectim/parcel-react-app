@@ -29,6 +29,7 @@ export const ApiReducer = combineReducers<RootState>({
   error: (state = "", action) => {
     switch (action.type) {
       case getType(generalActions.failure):
+        console.log('col');
         return action.payload;
       default: return state;
     }

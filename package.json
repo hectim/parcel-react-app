@@ -22,6 +22,7 @@
     "@types/react-router": "^4.0.22",
     "@types/redux-devtools-extension": "^2.13.2",
     "@types/rx": "^4.1.1",
+    "@types/webpack-env": "^1.13.5",
     "axios": "^0.17.1",
     "lodash": "^4.17.5",
     "parcel-bundler": "^1.6.2",
