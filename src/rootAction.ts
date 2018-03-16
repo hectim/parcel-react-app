@@ -10,3 +10,4 @@ const returnsOfActions = _.map(_.values(_.merge({},
   GraphActions,
 )), $call);
 export type RootAction = typeof returnsOfActions[number];
+

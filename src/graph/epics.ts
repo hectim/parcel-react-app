@@ -19,6 +19,6 @@ export const GraphEpics: Epic<RootAction, RootState> =
         .delay(2000)
         .takeUntil(action$.filter(isActionOf(GraphActions.cancel)))
         .map(res => res.response.message)
-        .map(imgSrc => GraphActions.success(imgSrc))
-        .catch(error => Observable.of(GraphActions.failure(error)))
+        .map(imgSrc1 => GraphActions.success(imgSrc1))
+        .catch(error1 => Observable.of(GraphActions.failure(error1)))
     })

@@ -13,9 +13,9 @@ let logo = require('../logo.svg')
 
 
 interface PropsFromState {
-  fetching: boolean;
-  imgSrc: string;
-  error: string;
+  fetching1: boolean;
+  imgSrc1: string;
+  error1: string;
 }
 
 interface PropsFromDispatch {
@@ -33,59 +33,41 @@ interface ReduxProps extends PropsFromState, PropsFromDispatch {}
 interface Props extends ReduxProps, PropsFromComponent {}
 
 
-interface ComponentLocalState {
-  readonly localStateExample: string,
-}
-
-class Graph extends React.Component<ReduxProps, PropsFromComponent | ComponentLocalState> {
-  state: ComponentLocalState;
+class Graph extends React.Component<ReduxProps, PropsFromComponent> {
   constructor(props: Props) {
     super(props);
-
-    this.state = {
-      localStateExample: "money",
-    };
-
-    this.handleClick = this.handleClick.bind(this)
   }
 
   componentWillReceiveProps() {
     console.log('checkout the props:', this.props)
   }
 
-  handleClick(e: React.FormEvent<HTMLButtonElement>): void {
-    this.state.localStateExample == 'money' ? 
-      this.setState({localStateExample: 'fame'}) :
-      this.setState({localStateExample: 'money'});
-  }
-
   render() {
-    const { fetching, imgSrc, error, onRequestGraph, cancelRequestGraph } = this.props;
-    console.log('imgSrc: ', imgSrc);
+    const { fetching1, imgSrc1, error1, onRequestGraph, cancelRequestGraph } = this.props;
+    console.log('imgSrc1: ', imgSrc1);
     return (
       <div className="App">
         <header className="App-header">
-          <img src={imgSrc || logo} className="App-logo" alt="logo" />
+          <img src={imgSrc1 || logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to Graph Saga</h1>
         </header>
 
-        {imgSrc ? (
+        {imgSrc1 ? (
           <p className="App-intro">Keep clicking for new graphs</p>
         ) : (
           <p className="App-intro">Replace the React icon with a graph!</p>
         )}
 
-        {fetching ? (
-          <button disabled>Fetching...</button>
+        {fetching1 ? (
+          <button disabled>fetching1...</button>
         ) : (
           <button onClick={onRequestGraph}>Request a graph</button>
         )}
 
-        {error && <p style={{ color: "red" }}>Uh oh - something went wrong!</p>}
+        {error1 && <p style={{ color: "red" }}>Uh oh - something went wrong!</p>}
        
         <button onClick={cancelRequestGraph}>Cancel API call</button>
         <br />
-        <button onClick={this.handleClick}>Click me to simulate an event</button>
       </div>
     );
   }
@@ -95,9 +77,9 @@ class Graph extends React.Component<ReduxProps, PropsFromComponent | ComponentLo
 function mapStateToProps(state: RootState, ownProps: PropsFromComponent): PropsFromState {
   console.log('state: ', state)
   return {
-    fetching: state.graph.fetching,
-    imgSrc: state.graph.imgSrc,
-    error: state.graph.error
+    fetching1: state.graph.fetching1,
+    imgSrc1: state.graph.imgSrc1,
+    error1: state.graph.error1
   }
 };
 
