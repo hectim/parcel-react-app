@@ -1,5 +1,10 @@
 ## Dog Saga - Redux-Saga Beginner Tutorial
-https://hackernoon.com/redux-saga-tutorial-for-beginners-and-dog-lovers-aa69a17db645
+Unfortunately there are no up-to date examples of Typescript with Redux, thus, we have this library.   
+
+The projects this was derived from:
++ https://hackernoon.com/redux-saga-tutorial-for-beginners-and-dog-lovers-aa69a17db645
++ https://github.com/zposten/Catalyst/
++ https://github.com/piotrwitek/react-redux-typescript-guide
 
 ## Compilation
 The compilation of this project uses a few steps: 

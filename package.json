@@ -39,7 +39,7 @@
     "utility-types": "^1.1.0"
   },
   "scripts": {
-    "start": "npm run start-tsc-watcher && npm run copy-to-tsc_dist && parcel public/index.html -p 3005 --open",
+    "start": "npm run start-tsc-watcher && npm run copy-to-tsc_dist && parcel public/index.html -p 3010 --open",
     "start-tsc-watcher": "tsc -w &",
     "build": "tsc && parcel build ./public/index.html --public-url ./",
     "copy-to-tsc_dist": "cp -r src/*.css tsc_dist && cp -r src/*.svg tsc_dist"

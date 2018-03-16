@@ -1,9 +1,8 @@
-import { $call } from 'utility-types';
 import { createAction } from 'typesafe-actions';
-import * as _ from 'lodash';
 
-export const generalActions = {
+export const DogActions = {
   request: createAction('REQUEST'),
+  cancel: createAction('CANCEL'),
   success: createAction('SUCCESS', (dog: string) => ({
     type: 'SUCCESS',
     payload: dog,
@@ -13,8 +12,3 @@ export const generalActions = {
     payload: error,
   })),
 }
-
-
-//const returnsOfActions = _.map(_.values(generalActions), $call));
-const returnsOfActions = Object.values(generalActions).map($call);
-export type ApiAction = typeof returnsOfActions[number];
