@@ -18,27 +18,27 @@ export const InitialDogState: DogState = {
 
 
 /* === REDUCER === */
-export const DogReducer = combineReducers<DogActions>({
+export const DogReducer = combineReducers<RootAction>({
   fetching: (state = false, action) => {
     switch(action.type) {
-      case getType(DogActions.request):
+      case getType(DogActions.dogRequest):
         return true;
-      case getType(DogActions.success):
-      case getType(DogActions.failure):
+      case getType(DogActions.dogSuccess):
+      case getType(DogActions.dogFailure):
         return false;
       default: return state;
     }
   },
   error: (state = null, action) => {
     switch(action.type) {
-      case getType(DogActions.failure):
+      case getType(DogActions.dogFailure):
         return action.payload;
       default: return state;
     }
   },
   imgSrc: (state = null, action) => {
     switch(action.type) {
-      case getType(DogActions.success):
+      case getType(DogActions.dogSuccess):
         return action.payload;
       default: return state;
     }
