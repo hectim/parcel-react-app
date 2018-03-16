@@ -1,10 +1,12 @@
 import { DogState, InitialDogState } from './dog/reducer';
+import { GraphState, InitialGraphState } from './graph/reducer';
 
 export const InitialState : RootState = {
-  dog: InitialDogState
+  dog: InitialDogState,
+  graph: InitialGraphState,
 };
 
 export type RootState = {
-  // api: ApiState;
   dog: DogState;
+  graph: GraphState;
 };
