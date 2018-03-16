@@ -7,8 +7,8 @@ export const GraphActions = {
     type: 'SUCCESS',
     payload: graph,
   })),
-  failure: createAction('FAILURE', (error1: string) => ({
+  failure: createAction('FAILURE', (error: string) => ({
     type: 'FAILURE',
-    payload: error1,
+    payload: error,
   })),
 }

@@ -13,9 +13,9 @@ let logo = require('../logo.svg')
 
 
 interface PropsFromState {
-  fetching1: boolean;
-  imgSrc1: string;
-  error1: string;
+  fetching: boolean;
+  imgSrc: string;
+  error: string;
 }
 
 interface PropsFromDispatch {
@@ -25,16 +25,11 @@ interface PropsFromDispatch {
   // onRequestGraph: (value:string) => void;
 }
 
-interface PropsFromComponent {
-  parentPropsExample: string
-}
-
 interface ReduxProps extends PropsFromState, PropsFromDispatch {}
-interface Props extends ReduxProps, PropsFromComponent {}
 
 
-class Graph extends React.Component<ReduxProps, PropsFromComponent> {
-  constructor(props: Props) {
+class Graph extends React.Component<ReduxProps, {}> {
+  constructor(props: ReduxProps) {
     super(props);
   }
 
@@ -43,28 +38,28 @@ class Graph extends React.Component<ReduxProps, PropsFromComponent> {
   }
 
   render() {
-    const { fetching1, imgSrc1, error1, onRequestGraph, cancelRequestGraph } = this.props;
-    console.log('imgSrc1: ', imgSrc1);
+    const { fetching, imgSrc, error, onRequestGraph, cancelRequestGraph } = this.props;
+    console.log('imgSrc: ', imgSrc);
     return (
       <div className="App">
         <header className="App-header">
-          <img src={imgSrc1 || logo} className="App-logo" alt="logo" />
+          <img src={imgSrc || logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to Graph Saga</h1>
         </header>
 
-        {imgSrc1 ? (
+        {imgSrc ? (
           <p className="App-intro">Keep clicking for new graphs</p>
         ) : (
           <p className="App-intro">Replace the React icon with a graph!</p>
         )}
 
-        {fetching1 ? (
-          <button disabled>fetching1...</button>
+        {fetching ? (
+          <button disabled>fetching...</button>
         ) : (
           <button onClick={onRequestGraph}>Request a graph</button>
         )}
 
-        {error1 && <p style={{ color: "red" }}>Uh oh - something went wrong!</p>}
+        {error && <p style={{ color: "red" }}>Uh oh - something went wrong!</p>}
        
         <button onClick={cancelRequestGraph}>Cancel API call</button>
         <br />
@@ -74,12 +69,12 @@ class Graph extends React.Component<ReduxProps, PropsFromComponent> {
 }
 
 
-function mapStateToProps(state: RootState, ownProps: PropsFromComponent): PropsFromState {
+function mapStateToProps(state: RootState): PropsFromState {
   console.log('state: ', state)
   return {
-    fetching1: state.graph.fetching1,
-    imgSrc1: state.graph.imgSrc1,
-    error1: state.graph.error1
+    fetching: state.graph.fetching,
+    imgSrc: state.graph.imgSrc,
+    error: state.graph.error
   }
 };
 
@@ -90,5 +85,5 @@ function mapDispatchToProps(dispatch: Dispatch<RootState>): PropsFromDispatch {
   }, dispatch);
 }
 
-export default connect<PropsFromState, PropsFromDispatch, PropsFromComponent>(mapStateToProps, mapDispatchToProps)(Graph);
+export default connect<PropsFromState, PropsFromDispatch, {}>(mapStateToProps, mapDispatchToProps)(Graph);
 

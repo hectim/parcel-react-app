@@ -6,15 +6,15 @@ import { GraphActions } from './actions';
 
 /* === State === */
 export type GraphState = {
-  readonly fetching1: boolean;
-  readonly error1: string;
-  readonly imgSrc1: string;
+  readonly fetching: boolean;
+  readonly error: string;
+  readonly imgSrc: string;
 };
 
 export const InitialGraphState: GraphState = {
-  fetching1: false,
-  error1: '',
-  imgSrc1: ''
+  fetching: false,
+  error: '',
+  imgSrc: ''
 };
 
 
@@ -24,17 +24,17 @@ export function GraphReducer(state: GraphState = InitialGraphState, action: Root
     case getType(GraphActions.request):
       return {
         ...state,
-        fetching1: !state.fetching1
+        fetching: !state.fetching
       }
     case getType(GraphActions.failure):
       return {
         ...state,
-        error1: action.payload
+        error: action.payload
       }
     case getType(GraphActions.success):
       return {
         ...state,
-        imgSrc1: action.payload
+        imgSrc: action.payload
       }
     default: return state;
   }
