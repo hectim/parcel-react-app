@@ -1,7 +1,7 @@
 import { getType } from 'typesafe-actions';
 
 import { RootAction } from '../rootAction';
-import { DogActions } from './actions';
+import * as DogActions from './actions';
 
 
 /* === State === */
@@ -21,17 +21,17 @@ export const InitialDogState: DogState = {
 /* === REDUCER === */
 export function DogReducer(state: DogState = InitialDogState, action: RootAction) {
   switch(action.type) {
-    case getType(DogActions.request):
+    case getType(DogActions.dogRequest):
       return {
         ...state,
         fetching: !state.fetching
       }
-    case getType(DogActions.failure):
+    case getType(DogActions.dogFailure):
       return {
         ...state,
         error: action.payload
       }
-    case getType(DogActions.success):
+    case getType(DogActions.dogSuccess):
       return {
         ...state,
         imgSrc: action.payload

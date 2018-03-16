@@ -1,14 +1,15 @@
 import { createAction } from 'typesafe-actions';
 
-export const GraphActions = {
-  request: createAction('REQUEST'),
-  cancel: createAction('CANCEL'),
-  success: createAction('SUCCESS', (graph: string) => ({
-    type: 'SUCCESS',
-    payload: graph,
-  })),
-  failure: createAction('FAILURE', (error: string) => ({
-    type: 'FAILURE',
-    payload: error,
-  })),
-}
+export const graphRequest = createAction('GRAPH_REQUEST')
+
+export const graphCancel = createAction('GRAPH_CANCEL')
+
+export const graphSuccess = createAction('GRAPH_SUCCESS', (graph: string) => ({
+  type: 'GRAPH_SUCCESS',
+  payload: graph,
+}))
+
+export const graphFailure = createAction('GRAPH_FAILURE', (error: string) => ({
+  type: 'GRAPH_FAILURE',
+  payload: error,
+}))

@@ -1,7 +1,7 @@
 import { getType } from 'typesafe-actions';
 
 import { RootAction } from '../rootAction';
-import { GraphActions } from './actions';
+import * as GraphActions from './actions';
 
 
 /* === State === */
@@ -21,17 +21,17 @@ export const InitialGraphState: GraphState = {
 /* === REDUCER === */
 export function GraphReducer(state: GraphState = InitialGraphState, action: RootAction) {
   switch(action.type) {
-    case getType(GraphActions.request):
+    case getType(GraphActions.graphRequest):
       return {
         ...state,
         fetching: !state.fetching
       }
-    case getType(GraphActions.failure):
+    case getType(GraphActions.graphFailure):
       return {
         ...state,
         error: action.payload
       }
-    case getType(GraphActions.success):
+    case getType(GraphActions.graphSuccess):
       return {
         ...state,
         imgSrc: action.payload
