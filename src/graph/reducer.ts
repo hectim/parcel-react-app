@@ -1,4 +1,5 @@
 import { getType } from 'typesafe-actions';
+import { combineReducers } from 'redux';
 
 import { RootAction } from '../rootAction';
 import * as GraphActions from './actions';
@@ -19,23 +20,29 @@ export const InitialGraphState: GraphState = {
 
 
 /* === REDUCER === */
-export function GraphReducer(state: GraphState = InitialGraphState, action: RootAction) {
-  switch(action.type) {
-    case getType(GraphActions.graphRequest):
-      return {
-        ...state,
-        fetching: !state.fetching
-      }
-    case getType(GraphActions.graphFailure):
-      return {
-        ...state,
-        error: action.payload
-      }
-    case getType(GraphActions.graphSuccess):
-      return {
-        ...state,
-        imgSrc: action.payload
-      }
-    default: return state;
+export const GraphReducer = combineReducers<RootAction>({
+  fetching: (state = false, action) => {
+    switch(action.type) {
+      case getType(GraphActions.graphRequest):
+        return true;
+      case getType(GraphActions.graphSuccess):
+      case getType(GraphActions.graphFailure):
+        return false;
+      default: return state;
+    }
+  },
+  error: (state = null, action) => {
+    switch(action.type) {
+      case getType(GraphActions.graphFailure):
+        return action.payload;
+      default: return state;
+    }
+  },
+  imgSrc: (state = null, action) => {
+    switch(action.type) {
+      case getType(GraphActions.graphSuccess):
+        return action.payload;
+      default: return state;
+    }
   }
-};
+})
