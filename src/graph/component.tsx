@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Dispatch, bindActionCreators  } from 'redux';
 import * as _ from 'lodash';
 
-import { GraphActions } from './actions';
+import * as GraphActions from './actions';
 import { RootState } from '../rootState';
 
 
@@ -80,8 +80,8 @@ function mapStateToProps(state: RootState): PropsFromState {
 
 function mapDispatchToProps(dispatch: Dispatch<RootState>): PropsFromDispatch {
   return bindActionCreators({
-  onRequestGraph: () => dispatch(GraphActions.request()),
-  cancelRequestGraph: () => dispatch(GraphActions.cancel()),
+  onRequestGraph: () => dispatch(GraphActions.graphRequest()),
+  cancelRequestGraph: () => dispatch(GraphActions.graphCancel()),
   }, dispatch);
 }
 

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Dispatch, bindActionCreators  } from 'redux';
 import * as _ from 'lodash';
 
-import { DogActions } from './actions';
+import * as DogActions from './actions';
 import { RootState } from '../rootState';
 
 
@@ -103,8 +103,8 @@ function mapStateToProps(state: RootState, ownProps: PropsFromComponent): PropsF
 
 function mapDispatchToProps(dispatch: Dispatch<RootState>): PropsFromDispatch {
   return bindActionCreators({
-  onRequestDog: () => dispatch(DogActions.request()),
-  cancelRequestDog: () => dispatch(DogActions.cancel()),
+  onRequestDog: () => dispatch(DogActions.dogRequest()),
+  cancelRequestDog: () => dispatch(DogActions.dogCancel()),
   }, dispatch);
 }
 

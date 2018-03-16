@@ -1,8 +1,8 @@
 import { $call } from 'utility-types';
 import * as _ from 'lodash';
 
-import { DogActions } from './dog/actions';
-import { GraphActions } from './graph/actions';
+import * as DogActions from './dog/actions';
+import * as GraphActions from './graph/actions';
 
 
 const returnsOfActions = {
