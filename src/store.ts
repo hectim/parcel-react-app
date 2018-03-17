@@ -4,7 +4,6 @@ import { createStore, applyMiddleware, compose, GenericStoreEnhancer} from "redu
 
 import { RootReducer } from './rootReducer';
 import { RootState, InitialState } from './rootState';
-import { RootAction } from "./rootAction";
 import { RootEpic } from './rootEpic';
 
 function configureStore(initialState?: RootState) {
@@ -14,9 +13,9 @@ function configureStore(initialState?: RootState) {
   ];
 
   // compose enhancers with dev tools
-  const enhancer = composeWithDevTools(compose(
+  const enhancer = composeWithDevTools(
     applyMiddleware(...middlewares)
-  ));
+  );
 
   // create store
   const store = createStore(
@@ -38,4 +37,3 @@ function configureStore(initialState?: RootState) {
 }
 
 export const Store = configureStore(InitialState);
-
