@@ -1,6 +1,7 @@
 import { createAction } from 'typesafe-actions';
 import { Node } from './reducer';
 
+// TODO delet all these, not useful. just clutter. Delet corresponding reducer & epics
 export const graphRequest = createAction('GRAPH_REQUEST');
 
 export const graphCancel = createAction('GRAPH_CANCEL');

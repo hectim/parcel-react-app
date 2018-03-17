@@ -3,6 +3,7 @@ import { isActionOf } from 'typesafe-actions';
 import { Observable } from 'rxjs';
 import * as axios from "axios";
 import 'rxjs/add/observable/dom/ajax';
+import { combineEpics } from 'redux-observable';
 
 import { RootState } from '../rootState';
 import { RootAction } from "../rootAction";
@@ -24,17 +25,18 @@ const graphEpics: Epic<RootAction, RootState> =
     })
 
 const nodeEpics: Epic<RootAction, RootState> = (action$, store) => action$
-    .filter(isActionOf(GraphActions.requestAddNode))
-    .debounceTime(400)
-    .delay(2000)
-    .map(() => {
-      return [id: 10, type: 'pipeline' ]
-    })
-    .map(node => GraphActions.successAddNode(node))
-// TODO add cancel and failure
+  .filter(isActionOf(GraphActions.requestAddNode))
+  .debounceTime(400)
+  .flatMap(() => {
+    return Observable
+      .delay(2000)
+      .takeUntil(action$.filter(isActionOf(GraphActions.cancelAddNode)))
+      .map(() => GraphActions.successAddNode([ id: 10, type: 'pipeline']))
+      .catch(error => Observable.of(GraphActions.failureAddNode(error)))
+  })
 
 
-export const RootGraphEpic = combineEpics(
+export const RootGraphEpics = combineEpics(
   nodeEpics,
   graphEpics
 )
