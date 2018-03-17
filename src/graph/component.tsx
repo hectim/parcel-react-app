@@ -39,7 +39,7 @@ class Graph extends React.Component<ReduxProps, {}> {
 
   render() {
     const { fetching, imgSrc, error, onRequestGraph, cancelRequestGraph } = this.props;
-    console.log('imgSrc: ', imgSrc);
+    console.log('graph imgSrc: ', imgSrc);
     return (
       <div className="App">
         <header className="App-header">
@@ -60,7 +60,7 @@ class Graph extends React.Component<ReduxProps, {}> {
         )}
 
         {error && <p style={{ color: "red" }}>Uh oh - something went wrong!</p>}
-       
+
         <button onClick={cancelRequestGraph}>Cancel API call</button>
         <br />
       </div>
@@ -70,7 +70,6 @@ class Graph extends React.Component<ReduxProps, {}> {
 
 
 function mapStateToProps(state: RootState): PropsFromState {
-  console.log('state: ', state)
   return {
     fetching: state.graph.fetching,
     imgSrc: state.graph.imgSrc,
@@ -80,8 +79,8 @@ function mapStateToProps(state: RootState): PropsFromState {
 
 function mapDispatchToProps(dispatch: Dispatch<RootState>): PropsFromDispatch {
   return bindActionCreators({
-  onRequestGraph: () => dispatch(GraphActions.graphRequest()),
-  cancelRequestGraph: () => dispatch(GraphActions.graphCancel()),
+  onRequestGraph:  GraphActions.graphRequest,
+  cancelRequestGraph: GraphActions.graphCancel,
   }, dispatch);
 }
 

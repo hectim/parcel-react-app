@@ -54,14 +54,14 @@ class Dog extends React.Component<ReduxProps, PropsFromComponent | ComponentLoca
   }
 
   handleClick(e: React.FormEvent<HTMLButtonElement>): void {
-    this.state.localStateExample == 'money' ? 
+    this.state.localStateExample == 'money' ?
       this.setState({localStateExample: 'fame'}) :
       this.setState({localStateExample: 'money'});
   }
 
   render() {
     const { fetching, imgSrc, error, onRequestDog, cancelRequestDog } = this.props;
-    console.log('imgSrc: ', imgSrc);
+    console.log('dog imgSrc: ', imgSrc);
     return (
       <div className="App">
         <header className="App-header">
@@ -82,7 +82,7 @@ class Dog extends React.Component<ReduxProps, PropsFromComponent | ComponentLoca
         )}
 
         {error && <p style={{ color: "red" }}>Uh oh - something went wrong!</p>}
-       
+
         <button onClick={cancelRequestDog}>Cancel API call</button>
         <br />
         <button onClick={this.handleClick}>Click me to simulate an event</button>
@@ -93,7 +93,6 @@ class Dog extends React.Component<ReduxProps, PropsFromComponent | ComponentLoca
 
 
 function mapStateToProps(state: RootState, ownProps: PropsFromComponent): PropsFromState {
-  console.log('state: ', state)
   return {
     fetching: state.dog.fetching,
     imgSrc: state.dog.imgSrc,
@@ -103,10 +102,9 @@ function mapStateToProps(state: RootState, ownProps: PropsFromComponent): PropsF
 
 function mapDispatchToProps(dispatch: Dispatch<RootState>): PropsFromDispatch {
   return bindActionCreators({
-  onRequestDog: () => dispatch(DogActions.dogRequest()),
-  cancelRequestDog: () => dispatch(DogActions.dogCancel()),
-  }, dispatch);
+    onRequestDog: DogActions.dogRequest,
+    cancelRequestDog: DogActions.dogCancel,
+    }, dispatch);
 }
 
 export default connect<PropsFromState, PropsFromDispatch, PropsFromComponent>(mapStateToProps, mapDispatchToProps)(Dog);
-
