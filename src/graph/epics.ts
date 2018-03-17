@@ -8,7 +8,7 @@ import { RootState } from '../rootState';
 import { RootAction } from "../rootAction";
 import * as GraphActions from './actions';
 
-export const GraphEpics: Epic<RootAction, RootState> =
+const graphEpics: Epic<RootAction, RootState> =
   (action$, store) => action$
     .filter(isActionOf(GraphActions.graphRequest))
     .debounceTime(400)
@@ -22,3 +22,19 @@ export const GraphEpics: Epic<RootAction, RootState> =
         .map(imgSrc => GraphActions.graphSuccess(imgSrc))
         .catch(error => Observable.of(GraphActions.graphFailure(error)))
     })
+
+const nodeEpics: Epic<RootAction, RootState> = (action$, store) => action$
+    .filter(isActionOf(GraphActions.requestAddNode))
+    .debounceTime(400)
+    .delay(2000)
+    .map(() => {
+      return [id: 10, type: 'pipeline' ]
+    })
+    .map(node => GraphActions.successAddNode(node))
+// TODO add cancel and failure
+
+
+export const RootGraphEpic = combineEpics(
+  nodeEpics,
+  graphEpics
+)
