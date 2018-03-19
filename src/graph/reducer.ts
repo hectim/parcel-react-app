@@ -11,7 +11,7 @@ import * as GraphActions from './actions';
 // map
 // array
 
-export interface Node { id: number; name: string };
+export interface Node { id: number; type: string };
 
 /* === State === */
 export interface GraphState {
@@ -38,27 +38,30 @@ export const InitialGraphState: GraphState = {
 
 /* === REDUCER === */
 export const GraphReducer = combineReducers<RootAction>({
-  nodes: {
-    isLoading: (state = false, action) => {
-      switch(action.type) {
-        case getType(GraphActions.requestAddNode):
-          return true;
-        case getType(GraphActions.cancelAddNode):
-        case getType(GraphActions.successAddNode):
-        case getType(GraphActions.failureAddNode):
-          return false;
-        default: return state;
-      };
-    },
-    nodes: (state = [], action) => {
-      switch(action.type) {
-        // TODO more CRUD
-        case getType(GraphActions.successAddNode):
-          return [...state, action.node];
-        default: return state;
-      };
-    },
-  },
+  nodes: (state = {}, action) => (
+    combineReducers<RootAction>({
+      isLoading: (state = false, action) => {
+        switch(action.type) {
+          case getType(GraphActions.requestAddNode):
+            console.log('in here');
+            return true;
+          case getType(GraphActions.cancelAddNode):
+          case getType(GraphActions.successAddNode):
+          case getType(GraphActions.failureAddNode):
+            return false;
+          default: return state;
+        };
+      },
+      nodes: (state = [], action) => {
+        switch(action.type) {
+          // TODO more CRUD
+          case getType(GraphActions.successAddNode):
+            return [...state, action.node];
+          default: return state;
+        };
+      },
+    })
+  ),
   fetching: (state = false, action) => {
     switch(action.type) {
       case getType(GraphActions.graphRequest):

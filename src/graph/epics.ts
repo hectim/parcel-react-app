@@ -8,11 +8,13 @@ import { combineEpics } from 'redux-observable';
 import { RootState } from '../rootState';
 import { RootAction } from "../rootAction";
 import * as GraphActions from './actions';
+import { Node } from './reducer';
 
 const graphEpics: Epic<RootAction, RootState> =
   (action$, store) => action$
     .filter(isActionOf(GraphActions.graphRequest))
     .debounceTime(400)
+    .do(() => { console.log('in graph epic') })
     .flatMap(() => {
       return Observable
         .ajax({crossDomain: true, method: 'GET', url: 'https://dog.ceo/api/breeds/image/random'})
@@ -21,19 +23,19 @@ const graphEpics: Epic<RootAction, RootState> =
         .takeUntil(action$.filter(isActionOf(GraphActions.graphCancel)))
         .map(res => res.response.message)
         .map(imgSrc => GraphActions.graphSuccess(imgSrc))
+        // Dispatch a requestAddNode action for testing
+        .map(() => GraphActions.requestAddNode)
         .catch(error => Observable.of(GraphActions.graphFailure(error)))
     })
 
 const nodeEpics: Epic<RootAction, RootState> = (action$, store) => action$
   .filter(isActionOf(GraphActions.requestAddNode))
+  .do(() => { console.log('in node epic') })
   .debounceTime(400)
-  .flatMap(() => {
-    return Observable
-      .delay(2000)
-      .takeUntil(action$.filter(isActionOf(GraphActions.cancelAddNode)))
-      .map(() => GraphActions.successAddNode([ id: 10, type: 'pipeline']))
-      .catch(error => Observable.of(GraphActions.failureAddNode(error)))
-  })
+  .delay(2000)
+  .takeUntil(action$.filter(isActionOf(GraphActions.cancelAddNode)))
+  .mapTo(GraphActions.successAddNode({ id: 10, type: 'pipeline'} as Node))
+  .catch(error => Observable.of(GraphActions.failureAddNode(error)))
 
 
 export const RootGraphEpics = combineEpics(

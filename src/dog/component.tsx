@@ -61,7 +61,6 @@ class Dog extends React.Component<ReduxProps, PropsFromComponent | ComponentLoca
 
   render() {
     const { fetching, imgSrc, error, onRequestDog, cancelRequestDog } = this.props;
-    console.log('dog imgSrc: ', imgSrc);
     return (
       <div className="App">
         <header className="App-header">

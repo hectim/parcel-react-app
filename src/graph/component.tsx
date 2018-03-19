@@ -21,6 +21,7 @@ interface PropsFromState {
 interface PropsFromDispatch {
   onRequestGraph: () => void;
   cancelRequestGraph: () => void;
+  requestAddNode: () => void;
   // another example:
   // onRequestGraph: (value:string) => void;
 }
@@ -34,12 +35,10 @@ class Graph extends React.Component<ReduxProps, {}> {
   }
 
   componentWillReceiveProps() {
-    console.log('checkout the props:', this.props)
   }
 
   render() {
-    const { fetching, imgSrc, error, onRequestGraph, cancelRequestGraph } = this.props;
-    console.log('graph imgSrc: ', imgSrc);
+    const { fetching, imgSrc, error, onRequestGraph, requestAddNode, cancelRequestGraph } = this.props;
     return (
       <div className="App">
         <header className="App-header">
@@ -56,7 +55,11 @@ class Graph extends React.Component<ReduxProps, {}> {
         {fetching ? (
           <button disabled>fetching...</button>
         ) : (
-          <button onClick={onRequestGraph}>Request a graph</button>
+          <div>
+            <button onClick={onRequestGraph}>Request a graph</button>
+            <br />
+            <button onClick={requestAddNode}>Request Add Node</button>
+          </div>
         )}
 
         {error && <p style={{ color: "red" }}>Uh oh - something went wrong!</p>}
@@ -81,6 +84,7 @@ function mapDispatchToProps(dispatch: Dispatch<RootState>): PropsFromDispatch {
   return bindActionCreators({
   onRequestGraph:  GraphActions.graphRequest,
   cancelRequestGraph: GraphActions.graphCancel,
+  requestAddNode: GraphActions.requestAddNode,
   }, dispatch);
 }
 
