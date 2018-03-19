@@ -40,8 +40,9 @@ export const InitialGraphState: GraphState = {
 export const GraphReducer = combineReducers<RootAction>({
   nodes: (state = {}, action) => {
     console.log('in nodes reducer', state);
-    return combineReducers<RootAction>({
-      isLoading: (state = false, action) => {
+    return {
+      isLoading: (function() {
+        console.log('isLoading: ', state)
         switch(action.type) {
           case getType(GraphActions.requestAddNode):
             console.log('the state in isLoading reducer: ', state);
@@ -51,12 +52,12 @@ export const GraphReducer = combineReducers<RootAction>({
           case getType(GraphActions.failureAddNode):
             return false;
           default: 
-            console.log('isLoading action: ', getType(action.type));
+            console.log('isLoading action: ', action.type);
             console.log('isLoading default: ', state);
             return state;
         };
-      },
-      nodes: (state = [], action) => {
+      }()),
+      nodes: (function() {
         switch(action.type) {
           // TODO more CRUD
           case getType(GraphActions.successAddNode):
@@ -64,8 +65,8 @@ export const GraphReducer = combineReducers<RootAction>({
             return [...state, action.node];
           default: return state;
         };
-      },
-    })
+      }()),
+    }
   },
   fetching: (state = false, action) => {
     switch(action.type) {
