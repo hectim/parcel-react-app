@@ -35,14 +35,15 @@ export const InitialGraphState: GraphState = {
   imgSrc: ''
 };
 
-
 /* === REDUCER === */
 export const GraphReducer = combineReducers<RootAction>({
-  nodes: (state = {}, action) => {
+  nodes: (state = InitialGraphState.nodes, action) => {
     console.log('in nodes reducer', state);
+    const isLoadingState = state.isLoading;
+    const nodesState = state.nodes;
     return {
       isLoading: (function() {
-        console.log('isLoading: ', state)
+        console.log('isLoading: ', state, action)
         switch(action.type) {
           case getType(GraphActions.requestAddNode):
             console.log('the state in isLoading reducer: ', state);
@@ -51,19 +52,20 @@ export const GraphReducer = combineReducers<RootAction>({
           case getType(GraphActions.successAddNode):
           case getType(GraphActions.failureAddNode):
             return false;
-          default: 
+          default:
             console.log('isLoading action: ', action.type);
             console.log('isLoading default: ', state);
-            return state;
+            return state.isLoading;
         };
       }()),
       nodes: (function() {
+        console.log('nodes substate: ', state, action)
         switch(action.type) {
           // TODO more CRUD
           case getType(GraphActions.successAddNode):
             console.log('the state in isLoading reducer: ', state);
-            return [...state, action.node];
-          default: return state;
+            return [...state.nodes, action.payload];
+          default: return state.nodes;
         };
       }()),
     }
