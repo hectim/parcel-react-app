@@ -50,7 +50,6 @@ class Dog extends React.Component<ReduxProps, PropsFromComponent | ComponentLoca
   }
 
   componentWillReceiveProps() {
-    console.log('checkout the props:', this.props)
   }
 
   handleClick(e: React.FormEvent<HTMLButtonElement>): void {

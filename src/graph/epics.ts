@@ -23,8 +23,6 @@ const graphEpics: Epic<RootAction, RootState> =
         .takeUntil(action$.filter(isActionOf(GraphActions.graphCancel)))
         .map(res => res.response.message)
         .map(imgSrc => GraphActions.graphSuccess(imgSrc))
-        // Dispatch a requestAddNode action for testing
-        .map(() => GraphActions.requestAddNode)
         .catch(error => Observable.of(GraphActions.graphFailure(error)))
     })
 
