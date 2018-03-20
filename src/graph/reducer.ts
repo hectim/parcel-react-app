@@ -18,6 +18,7 @@ export interface GraphState {
   nodes: {
     isLoading: boolean;
     nodes: Array<Node>;
+    errorMsg: string;
   }
   readonly fetching: boolean;
   readonly error: string;
@@ -29,6 +30,7 @@ export const InitialGraphState: GraphState = {
   nodes: {
     isLoading: false,
     nodes: [],
+    errorMsg: '',
   },
   fetching: false,
   error: '',
@@ -37,59 +39,60 @@ export const InitialGraphState: GraphState = {
 
 
 /* === REDUCER === */
-export const GraphReducer = combineReducers<RootAction>({
-  nodes: (state = {}, action) => {
-    console.log('in nodes reducer', state);
-    return {
-      isLoading: (function() {
-        console.log('isLoading: ', state)
-        switch(action.type) {
-          case getType(GraphActions.requestAddNode):
-            console.log('the state in isLoading reducer: ', state);
-            return true;
-          case getType(GraphActions.cancelAddNode):
-          case getType(GraphActions.successAddNode):
-          case getType(GraphActions.failureAddNode):
-            return false;
-          default: 
-            console.log('isLoading action: ', action.type);
-            console.log('isLoading default: ', state);
-            return state;
-        };
-      }()),
-      nodes: (function() {
-        switch(action.type) {
-          // TODO more CRUD
-          case getType(GraphActions.successAddNode):
-            console.log('the state in isLoading reducer: ', state);
-            return [...state, action.node];
-          default: return state;
-        };
-      }()),
-    }
-  },
-  fetching: (state = false, action) => {
-    switch(action.type) {
-      case getType(GraphActions.graphRequest):
-        return true;
-      case getType(GraphActions.graphSuccess):
-      case getType(GraphActions.graphFailure):
-        return false;
-      default: return state;
-    }
-  },
-  error: (state = null, action) => {
-    switch(action.type) {
-      case getType(GraphActions.graphFailure):
-        return action.payload;
-      default: return state;
-    }
-  },
-  imgSrc: (state = null, action) => {
-    switch(action.type) {
-      case getType(GraphActions.graphSuccess):
-        return action.payload;
-      default: return state;
-    }
+export function GraphReducer(state: GraphState = InitialGraphState, action: RootAction) {
+  switch(action.type) {
+    case getType(GraphActions.requestAddNode):
+      return {
+        ...state,
+        nodes: {
+          ...state.nodes,
+          isLoading: true
+        }
+      }
+    case getType(GraphActions.cancelAddNode):
+      return {
+        ...state,
+        nodes: {
+          ...state.nodes,
+          isLoading: false
+        }
+      }
+    case getType(GraphActions.successAddNode):
+      return {
+        ...state,
+        nodes: {
+          ...state.nodes,
+          isLoading: false,
+          nodes: state.nodes.nodes.concat(action.payload)
+        }
+      }
+    case getType(GraphActions.failureAddNode):
+      return {
+        ...state,
+        nodes: {
+          ...state.nodes,
+          isLoading: false,
+          errorMsg: action.payload
+        }
+      }
+
+    case getType(GraphActions.graphRequest):
+      return {
+        ...state,
+        fetching: true
+      }
+    case getType(GraphActions.graphFailure):
+      return {
+        ...state,
+        fetching: false,
+        error: action.payload
+      }
+    case getType(GraphActions.graphSuccess):
+      return {
+        ...state,
+        fetching: false,
+        imgSrc: action.payload
+      }
+    default: return state;
   }
-})
+};
