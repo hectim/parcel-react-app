@@ -8,7 +8,7 @@ import { combineEpics } from 'redux-observable';
 import { RootState } from '../rootState';
 import { RootAction } from "../rootAction";
 import * as GraphActions from './actions';
-import { Node, Label, UpdateLabel } from './reducer';
+import { GraphNode, Label, UpdateLabel } from './types';
 
 const nodeEpics: Epic<RootAction, RootState> = (action$, store) => action$
   .filter(isActionOf(GraphActions.requestAddNode))
@@ -16,7 +16,7 @@ const nodeEpics: Epic<RootAction, RootState> = (action$, store) => action$
   .debounceTime(400)
   .delay(2000)
   .takeUntil(action$.filter(isActionOf(GraphActions.cancelAddNode)))
-  .mapTo(GraphActions.successAddNode({ id: 100, type: 'pipeline'} as Node))
+  .mapTo(GraphActions.successAddNode({ id: 100, type: 'pipeline'} as GraphNode))
   .catch(error => Observable.of(GraphActions.failureAddNode(error)))
 
 const createLabelEpic: Epic<RootAction, RootState> = (action$, store) => action$

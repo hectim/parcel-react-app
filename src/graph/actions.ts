@@ -1,10 +1,11 @@
 import { createAction } from 'typesafe-actions';
-import { Node, Label, UpdateLabel } from './reducer';
+import { GraphNode, Label, UpdateLabel } from './types';
+
 
 // Add Node
 export const requestAddNode = createAction('GRAPH_REQUEST_ADD_NODE');
 export const cancelAddNode = createAction('GRAPH_CANCEL_ADD_NODE');
-export const successAddNode = createAction('GRAPH_ADD_NODE', (node: Node) => ({
+export const successAddNode = createAction('GRAPH_ADD_NODE', (node: GraphNode) => ({
   type: 'GRAPH_ADD_NODE',
   payload: node,
 }));

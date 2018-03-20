@@ -1,5 +1,5 @@
 import { DogState, InitialDogState } from './dog/reducer';
-import { GraphState, InitialGraphState } from './graph/reducer';
+import { GraphState, InitialGraphState } from './graph/reducers';
 
 export const InitialState : RootState = {
   dog: InitialDogState,
