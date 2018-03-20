@@ -20,6 +20,7 @@ export interface GraphState {
   nodes: {
     isLoading: boolean;
     nodes: Node[];
+    errorMsg: string;
   },
   labels: {
     isLoading: boolean;
@@ -32,6 +33,7 @@ export const InitialGraphState: GraphState = {
   nodes: {
     isLoading: false,
     nodes: [],
+    errorMsg: '',
   },
   labels: {
     isLoading: false,
@@ -114,4 +116,61 @@ export const GraphReducer = combineReducers<RootAction>({
       }()),
     }
   }
-})
+});
+// export function GraphReducer(state: GraphState = InitialGraphState, action: RootAction) {
+//   switch(action.type) {
+//     case getType(GraphActions.requestAddNode):
+//       return {
+//         ...state,
+//         nodes: {
+//           ...state.nodes,
+//           isLoading: true
+//         }
+//       }
+//     case getType(GraphActions.cancelAddNode):
+//       return {
+//         ...state,
+//         nodes: {
+//           ...state.nodes,
+//           isLoading: false
+//         }
+//       }
+//     case getType(GraphActions.successAddNode):
+//       return {
+//         ...state,
+//         nodes: {
+//           ...state.nodes,
+//           isLoading: false,
+//           nodes: state.nodes.nodes.concat(action.payload)
+//         }
+//       }
+//     case getType(GraphActions.failureAddNode):
+//       return {
+//         ...state,
+//         nodes: {
+//           ...state.nodes,
+//           isLoading: false,
+//           errorMsg: action.payload
+//         }
+//       }
+
+//     case getType(GraphActions.graphRequest):
+//       return {
+//         ...state,
+//         fetching: true
+//       }
+//     case getType(GraphActions.graphFailure):
+//       return {
+//         ...state,
+//         fetching: false,
+//         error: action.payload
+//       }
+//     case getType(GraphActions.graphSuccess):
+//       return {
+//         ...state,
+//         fetching: false,
+//         imgSrc: action.payload
+//       }
+//     default: return state;
+//   }
+// };
