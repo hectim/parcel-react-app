@@ -15,7 +15,6 @@ protoc --plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts \
 
 ## Dog Saga - Redux-Saga Beginner Tutorial
 Unfortunately there are no up-to date examples of Typescript with Redux, thus, we have this library.   
->>>>>>> f2eae3f398adce4e6ffe27cd301d5988a732f111
 
 The projects this was derived from:
 + https://hackernoon.com/redux-saga-tutorial-for-beginners-and-dog-lovers-aa69a17db645

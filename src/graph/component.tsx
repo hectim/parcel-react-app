@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Dispatch, bindActionCreators  } from 'redux';
 import * as _ from 'lodash';
 
-import { Node, Label } from './types'
+import { GraphNode } from './types'
 
 import * as GraphActions from './actions';
 import { RootState } from '../rootState';
@@ -14,9 +14,11 @@ let logo = require('../logo.svg')
 
 interface PropsFromState {
   nodeLoading:boolean;
-  nodes:Array<Node>;
+  nodes:GraphNode[];
+  nodesError: string;
   labelLoading:boolean;
   labels:Map<string, number>;
+  labelsError: string;
 };
 
 interface PropsFromDispatch {
@@ -104,8 +106,10 @@ function mapStateToProps(state: RootState): PropsFromState {
   return {
     nodeLoading: state.graph.nodes.isLoading,
     nodes: state.graph.nodes.nodes,
+    nodesError: state.graph.nodes.errorMsg,
     labelLoading: state.graph.labels.isLoading,
     labels: state.graph.labels.labels,
+    labelsError: state.graph.labels.errorMsg,
   };
 };
 

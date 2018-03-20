@@ -8,7 +8,7 @@ import { combineEpics } from 'redux-observable';
 import { RootState } from '../rootState';
 import { RootAction } from "../rootAction";
 import * as GraphActions from './actions';
-import { Node, Label, UpdateLabel } from './types';
+import { GraphNode, Label, UpdateLabel } from './types';
 
 const nodeEpics: Epic<RootAction, RootState> = (action$, store) => action$
   .filter(isActionOf(GraphActions.requestAddNode))
@@ -19,7 +19,7 @@ const nodeEpics: Epic<RootAction, RootState> = (action$, store) => action$
       .ajax({crossDomain: true, method: 'GET', url: 'https://dog.ceo/api/breeds/image/random'})
     //.delay(2000)
       .takeUntil(action$.filter(isActionOf(GraphActions.cancelAddNode)))
-      .map(res => ({ img: res.response.message, id: 400, type: 'pipeline'}) as Node)
+      .map(res => ({ img: res.response.message, id: 400, type: 'pipeline'}) as GraphNode)
       .map(myNode => GraphActions.successAddNode(myNode))
       .catch(error => Observable.of(GraphActions.failureAddNode(error)))
   })
