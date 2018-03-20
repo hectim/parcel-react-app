@@ -39,7 +39,10 @@ export const updateLabelFailure = createAction('GRAPH_UPDATE_LABEL_FAILURE', (er
 }));
 export const updateLabelCancel = createAction('GRAPH_UPDATE_LABEL_CANCEL')
 
-export const deleteLabelRequest = createAction('GRAPH_DELETE_LABEL_REQUEST')
+export const deleteLabelRequest = createAction('GRAPH_DELETE_LABEL_REQUEST', (label: Label) => ({
+  type: 'GRAPH_DELETE_LABEL_REQUEST',
+  payload: label
+}));
 export const deleteLabelSuccess = createAction('GRAPH_DELETE_LABEL_SUCCESS', (label: Label) => ({
   type: 'GRAPH_DELETE_LABEL_SUCCESS',
   payload: label,

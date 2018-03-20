@@ -22,7 +22,7 @@ interface PropsFromState {
 interface PropsFromDispatch {
   requestAddNode: () => void;
   createLabelRequest: () => void;
-  deleteLabelRequest: () => void;
+  deleteLabelRequest: (label: Label) => void;
   updateLabelRequest: (label: Label) => void;
   // another example:
   // onRequestGraph: (value:string) => void;
@@ -47,9 +47,12 @@ class Graph extends React.Component<ReduxProps, {}> {
     labels.forEach((value: number, key: string) => {
       labelDisplay.push(
         <div key={value}> [ key:{key} - value:{value} ]
-          <button onClick={() => updateLabelRequest(
+          <button key={value+'update'} onClick={() => updateLabelRequest(
             { img: key, nodeId: value }
-          )}>Request Update Label</button>
+          )}>Update</button>
+          <button key={value+'delete'} onClick={() => deleteLabelRequest(
+            { img: key, nodeId: value }
+          )}>Delete</button>
         </div>
       )
     })
@@ -88,7 +91,6 @@ class Graph extends React.Component<ReduxProps, {}> {
         ) : (
         <div>
           <button onClick={createLabelRequest}>Request Create Label</button>
-          <button onClick={deleteLabelRequest}>Request Delete Label</button>
         </div>
         )}
         {labelDisplay}
