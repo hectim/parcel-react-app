@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Dispatch, bindActionCreators  } from 'redux';
 import * as _ from 'lodash';
 
-import { GraphNode } from './types'
+import { GraphNode, Label } from './types'
 
 import * as GraphActions from './actions';
 import { RootState } from '../rootState';
@@ -61,7 +61,7 @@ class Graph extends React.Component<ReduxProps, {}> {
 
     let nodeDisplay:JSX.Element[] = []
     nodeDisplay.push(<div>Node Array:</div>)
-    nodes.forEach((node: Node, i: number) => {
+    nodes.forEach((node: GraphNode, i: number) => {
       nodeDisplay.push(
         <div key={i}>type: {node.type} -- img: {node.img}
           <button>Request Update Node</button>
