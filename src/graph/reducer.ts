@@ -37,7 +37,6 @@ export const InitialGraphState: GraphState = {
   imgSrc: ''
 };
 
-
 /* === REDUCER === */
 export function GraphReducer(state: GraphState = InitialGraphState, action: RootAction) {
   switch(action.type) {
