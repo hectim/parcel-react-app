@@ -9,8 +9,6 @@ import { Node } from './reducer'
 import * as GraphActions from './actions';
 import { RootState } from '../rootState';
 
-
-// TODO move the logo
 let logo = require('../logo.svg')
 
 
@@ -43,12 +41,24 @@ class Graph extends React.Component<ReduxProps, {}> {
 
   render() {
     const { nodes, nodeLoading, labelLoading, labels, requestAddNode, createLabelRequest, deleteLabelRequest, updateLabelRequest } = this.props;
+
+    let labelDisplay:JSX.Element[] = []
+    labels.forEach((value: number, key: string) => {
+      labelDisplay.push(<span> [ key:{key} - value:{value} ] </span>)
+    })
+
+    let nodeDisplay:JSX.Element[] = []
+    nodes.forEach((node: Node, i: number) => {
+      nodeDisplay.push(<span key={i}> [ id:{node.id} - type:{node.type} ] </span>)
+    })
+
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to Graph Saga</h1>
         </header>
+        <br />
 
         {nodeLoading ? (
           <button disabled>fetching...</button>
@@ -57,7 +67,8 @@ class Graph extends React.Component<ReduxProps, {}> {
             <button onClick={requestAddNode}>Request Add Node</button>
           </div>
         )}
-        { nodes.forEach((node) => <span>{node}</span>) }
+        {nodeDisplay}
+        <br />
         <br />
 
         {labelLoading ? (
@@ -69,7 +80,7 @@ class Graph extends React.Component<ReduxProps, {}> {
           <button onClick={updateLabelRequest}>Request Update Label</button>
         </div>
         )}
-        {labels}
+        {labelDisplay}
         <br />
       </div>
     );
