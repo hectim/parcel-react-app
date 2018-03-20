@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Dispatch, bindActionCreators  } from 'redux';
 import * as _ from 'lodash';
 
-import { Node } from './reducer'
+import { Node, Label } from './types'
 
 import * as GraphActions from './actions';
 import { RootState } from '../rootState';
@@ -23,7 +23,7 @@ interface PropsFromDispatch {
   requestAddNode: () => void;
   createLabelRequest: () => void;
   deleteLabelRequest: () => void;
-  updateLabelRequest: () => void;
+  updateLabelRequest: (label: Label) => void;
   // another example:
   // onRequestGraph: (value:string) => void;
 }
@@ -43,13 +43,25 @@ class Graph extends React.Component<ReduxProps, {}> {
     const { nodes, nodeLoading, labelLoading, labels, requestAddNode, createLabelRequest, deleteLabelRequest, updateLabelRequest } = this.props;
 
     let labelDisplay:JSX.Element[] = []
+    labelDisplay.push(<div>Label Map:</div>)
     labels.forEach((value: number, key: string) => {
-      labelDisplay.push(<span> [ key:{key} - value:{value} ] </span>)
+      labelDisplay.push(
+        <div key={value}> [ key:{key} - value:{value} ]
+          <button onClick={() => updateLabelRequest(
+            { img: key, nodeId: value }
+          )}>Request Update Label</button>
+        </div>
+      )
     })
 
     let nodeDisplay:JSX.Element[] = []
+    nodeDisplay.push(<div>Node Array:</div>)
     nodes.forEach((node: Node, i: number) => {
-      nodeDisplay.push(<span key={i}> [ id:{node.id} - type:{node.type} ] </span>)
+      nodeDisplay.push(
+        <div key={i}>type: {node.type} -- img: {node.img}
+          <button>Request Update Node</button>
+        </div>
+      )
     })
 
     return (
@@ -77,7 +89,6 @@ class Graph extends React.Component<ReduxProps, {}> {
         <div>
           <button onClick={createLabelRequest}>Request Create Label</button>
           <button onClick={deleteLabelRequest}>Request Delete Label</button>
-          <button onClick={updateLabelRequest}>Request Update Label</button>
         </div>
         )}
         {labelDisplay}

@@ -4,16 +4,12 @@ import { combineReducers } from 'redux';
 import { RootAction } from '../rootAction';
 import * as GraphActions from './actions';
 
-
+import { Node, Label, UpdateLabel } from './types';
 
 // TODO
 // object
 // map
 // array
-
-export interface Node { id: number; type: string };
-export interface Label { name: string; nodeId: number };
-export interface UpdateLabel { name: string; nodeId: number; prevName: string };
 
 /* === State === */
 export interface GraphState {

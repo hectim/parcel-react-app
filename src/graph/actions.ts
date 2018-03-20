@@ -1,5 +1,5 @@
 import { createAction } from 'typesafe-actions';
-import { Node, Label, UpdateLabel } from './reducer';
+import { Node, Label, UpdateLabel } from './types';
 
 // Add Node
 export const requestAddNode = createAction('GRAPH_REQUEST_ADD_NODE');
@@ -25,7 +25,10 @@ export const createLabelFailure = createAction('GRAPH_CREATE_LABEL_FAILURE', (er
 }));
 export const createLabelCancel = createAction('GRAPH_CREATE_LABEL_CANCEL')
 
-export const updateLabelRequest = createAction('GRAPH_UPDATE_LABEL_REQUEST')
+export const updateLabelRequest = createAction('GRAPH_UPDATE_LABEL_REQUEST', (label: Label) => ({
+  type: 'GRAPH_UPDATE_LABEL_REQUEST',
+  payload: label,
+}));
 export const updateLabelSuccess = createAction('GRAPH_UPDATE_LABEL_SUCCESS', (label: UpdateLabel) => ({
   type: 'GRAPH_UPDATE_LABEL_SUCCESS',
   payload: label,

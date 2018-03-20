@@ -8,43 +8,57 @@ import { combineEpics } from 'redux-observable';
 import { RootState } from '../rootState';
 import { RootAction } from "../rootAction";
 import * as GraphActions from './actions';
-import { Node, Label, UpdateLabel } from './reducer';
+import { Node, Label, UpdateLabel } from './types';
 
 const nodeEpics: Epic<RootAction, RootState> = (action$, store) => action$
   .filter(isActionOf(GraphActions.requestAddNode))
   .do(() => { console.log('in node epic'); })
   .debounceTime(400)
-  .delay(2000)
-  .takeUntil(action$.filter(isActionOf(GraphActions.cancelAddNode)))
-  .mapTo(GraphActions.successAddNode({ id: 100, type: 'pipeline'} as Node))
-  .catch(error => Observable.of(GraphActions.failureAddNode(error)))
+  .flatMap(() => {
+    return Observable
+      .ajax({crossDomain: true, method: 'GET', url: 'https://dog.ceo/api/breeds/image/random'})
+    //.delay(2000)
+      .takeUntil(action$.filter(isActionOf(GraphActions.cancelAddNode)))
+      .map(res => ({ img: res.response.message, id: 400, type: 'pipeline'}) as Node)
+      .map(myNode => GraphActions.successAddNode(myNode))
+      .catch(error => Observable.of(GraphActions.failureAddNode(error)))
+  })
 
 const createLabelEpic: Epic<RootAction, RootState> = (action$, store) => action$
   .filter(isActionOf(GraphActions.createLabelRequest))
   .do(() => { console.log('create label epic', action$) })
-  .debounceTime(400)
-  .delay(2000)
-  .takeUntil(action$.filter(isActionOf(GraphActions.createLabelCancel)))
-  .mapTo(GraphActions.createLabelSuccess({ name: 'fakelabel', nodeId: 11} as Label))
-  .catch(error => Observable.of(GraphActions.createLabelFailure(error)))
+  .flatMap(() => {
+    return Observable
+      .ajax({crossDomain: true, method: 'GET', url: 'https://dog.ceo/api/breeds/image/random'})
+      //.delay(2000)
+      .takeUntil(action$.filter(isActionOf(GraphActions.createLabelCancel)))
+      .map(res => ({ img: res.response.message, nodeId: 1 }) as Label)
+      .do(test => { console.log('lol', test) })
+      .map(myLabel => GraphActions.createLabelSuccess(myLabel))
+      .catch(error => Observable.of(GraphActions.createLabelFailure(error)))
+  })
 
 const deleteLabelEpic: Epic<RootAction, RootState> = (action$, store) => action$
   .filter(isActionOf(GraphActions.deleteLabelRequest))
   .do(() => { console.log('delete label epic', action$) })
   .debounceTime(400)
-  .delay(2000)
+  .delay(1000)
   .takeUntil(action$.filter(isActionOf(GraphActions.deleteLabelCancel)))
-  .mapTo(GraphActions.deleteLabelSuccess({name: 'fakelabel', nodeId: 11} as Label))
+  .map(action => GraphActions.deleteLabelSuccess({...action.payload} as Label))
   .catch(error => Observable.of(GraphActions.deleteLabelFailure(error)))
 
 const updateLabelEpic: Epic<RootAction, RootState> = (action$, store) => action$
   .filter(isActionOf(GraphActions.updateLabelRequest))
-  .do(() => { console.log('update label epic', action$) })
-  .debounceTime(400)
-  .delay(2000)
-  .takeUntil(action$.filter(isActionOf(GraphActions.updateLabelCancel)))
-  .mapTo(GraphActions.updateLabelSuccess({name: 'hihwelkjr', nodeId: 11, prevName: 'fakelabel'} as UpdateLabel))
-  .catch(error => Observable.of(GraphActions.updateLabelFailure(error)))
+  .do((test) => { console.log('update label epic', test) })
+  .flatMap((action) => {
+    return Observable
+      .ajax({crossDomain: true, method: 'GET', url: 'https://dog.ceo/api/breeds/image/random'})
+      //.delay(2000)
+      .takeUntil(action$.filter(isActionOf(GraphActions.updateLabelCancel)))
+      .map(res => ({ img: res.response.message, nodeId: 1, prevImg: action.payload.img}) as UpdateLabel)
+      .map(myLabel => GraphActions.updateLabelSuccess(myLabel))
+      .catch(error => Observable.of(GraphActions.updateLabelFailure(error)))
+  })
 
 export const RootGraphEpics = combineEpics(
   nodeEpics,
