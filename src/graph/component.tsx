@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { Dispatch, bindActionCreators  } from 'redux';
 import * as _ from 'lodash';
 
+import { Node } from './reducer'
+
 import * as GraphActions from './actions';
 import { RootState } from '../rootState';
 
@@ -13,15 +15,17 @@ let logo = require('../logo.svg')
 
 
 interface PropsFromState {
-  fetching: boolean;
-  imgSrc: string;
-  error: string;
-}
+  nodeLoading:boolean;
+  nodes:Array<Node>;
+  labelLoading:boolean;
+  labels:Map<string, number>;
+};
 
 interface PropsFromDispatch {
-  onRequestGraph: () => void;
-  cancelRequestGraph: () => void;
   requestAddNode: () => void;
+  createLabelRequest: () => void;
+  deleteLabelRequest: () => void;
+  updateLabelRequest: () => void;
   // another example:
   // onRequestGraph: (value:string) => void;
 }
@@ -38,53 +42,53 @@ class Graph extends React.Component<ReduxProps, {}> {
   }
 
   render() {
-    const { fetching, imgSrc, error, onRequestGraph, requestAddNode, cancelRequestGraph } = this.props;
+    const { nodes, nodeLoading, labelLoading, labels, requestAddNode, createLabelRequest, deleteLabelRequest, updateLabelRequest } = this.props;
     return (
       <div className="App">
         <header className="App-header">
-          <img src={imgSrc || logo} className="App-logo" alt="logo" />
+          <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to Graph Saga</h1>
         </header>
 
-        {imgSrc ? (
-          <p className="App-intro">Keep clicking for new graphs</p>
-        ) : (
-          <p className="App-intro">Replace the React icon with a graph!</p>
-        )}
-
-        {fetching ? (
+        {nodeLoading ? (
           <button disabled>fetching...</button>
         ) : (
           <div>
-            <button onClick={onRequestGraph}>Request a graph</button>
-            <br />
             <button onClick={requestAddNode}>Request Add Node</button>
           </div>
         )}
+        <br />
 
-        {error && <p style={{ color: "red" }}>Uh oh - something went wrong!</p>}
-
-        <button onClick={cancelRequestGraph}>Cancel API call</button>
+        {labelLoading ? (
+        <button disabled>fetching...</button>
+        ) : (
+        <div>
+          <button onClick={createLabelRequest}>Request Create Label</button>
+          <button onClick={deleteLabelRequest}>Request Delete Label</button>
+          <button onClick={updateLabelRequest}>Request Update Label</button>
+        </div>
+        )}
         <br />
       </div>
     );
   }
 }
 
-
 function mapStateToProps(state: RootState): PropsFromState {
   return {
-    fetching: state.graph.fetching,
-    imgSrc: state.graph.imgSrc,
-    error: state.graph.error
-  }
+    nodeLoading: state.graph.nodes.isLoading,
+    nodes: state.graph.nodes.nodes,
+    labelLoading: state.graph.labels.isLoading,
+    labels: state.graph.labels.labels,
+  };
 };
 
 function mapDispatchToProps(dispatch: Dispatch<RootState>): PropsFromDispatch {
   return bindActionCreators({
-  onRequestGraph:  GraphActions.graphRequest,
-  cancelRequestGraph: GraphActions.graphCancel,
-  requestAddNode: GraphActions.requestAddNode,
+    requestAddNode: GraphActions.requestAddNode,
+    createLabelRequest: GraphActions.createLabelRequest,
+    deleteLabelRequest: GraphActions.deleteLabelRequest,
+    updateLabelRequest: GraphActions.updateLabelRequest,
   }, dispatch);
 }
 

@@ -12,16 +12,19 @@ import * as GraphActions from './actions';
 // array
 
 export interface Node { id: number; type: string };
+export interface Label { name: string; nodeId: number };
+export interface UpdateLabel { name: string; nodeId: number; prevName: string };
 
 /* === State === */
 export interface GraphState {
   nodes: {
     isLoading: boolean;
-    nodes: Array<Node>;
+    nodes: Node[];
+  },
+  labels: {
+    isLoading: boolean;
+    labels: Map<string, number>;
   }
-  readonly fetching: boolean;
-  readonly error: string;
-  readonly imgSrc: string;
 };
 
 // TODO stop using initial state here. it is being repeated by the reducer.
@@ -30,17 +33,15 @@ export const InitialGraphState: GraphState = {
     isLoading: false,
     nodes: [],
   },
-  fetching: false,
-  error: '',
-  imgSrc: ''
+  labels: {
+    isLoading: false,
+    labels: new Map<string, number>(),
+  }
 };
 
 /* === REDUCER === */
 export const GraphReducer = combineReducers<RootAction>({
   nodes: (state = InitialGraphState.nodes, action) => {
-    console.log('in nodes reducer', state);
-    const isLoadingState = state.isLoading;
-    const nodesState = state.nodes;
     return {
       isLoading: (function() {
         console.log('isLoading: ', state, action)
@@ -59,39 +60,58 @@ export const GraphReducer = combineReducers<RootAction>({
         };
       }()),
       nodes: (function() {
-        console.log('nodes substate: ', state, action)
+        console.log('nodes substate: ', state, action, 'type', state["nodes"])
         switch(action.type) {
           // TODO more CRUD
           case getType(GraphActions.successAddNode):
             console.log('the state in isLoading reducer: ', state);
-            return [...state.nodes, action.payload];
+            return state.nodes.concat(action.payload);
           default: return state.nodes;
         };
       }()),
     }
   },
-  fetching: (state = false, action) => {
-    switch(action.type) {
-      case getType(GraphActions.graphRequest):
-        return true;
-      case getType(GraphActions.graphSuccess):
-      case getType(GraphActions.graphFailure):
-        return false;
-      default: return state;
-    }
-  },
-  error: (state = null, action) => {
-    switch(action.type) {
-      case getType(GraphActions.graphFailure):
-        return action.payload;
-      default: return state;
-    }
-  },
-  imgSrc: (state = null, action) => {
-    switch(action.type) {
-      case getType(GraphActions.graphSuccess):
-        return action.payload;
-      default: return state;
+  labels: (state = InitialGraphState.labels, action) => {
+    return {
+      isLoading: (function() {
+        console.log('isLoading label', state, action)
+        switch(action.type){
+          case getType(GraphActions.createLabelRequest):
+          case getType(GraphActions.deleteLabelRequest):
+          case getType(GraphActions.updateLabelRequest):
+            return true;
+          case getType(GraphActions.createLabelSuccess):
+          case getType(GraphActions.deleteLabelSuccess):
+          case getType(GraphActions.updateLabelSuccess):
+          case getType(GraphActions.createLabelFailure):
+          case getType(GraphActions.deleteLabelFailure):
+          case getType(GraphActions.updateLabelFailure):
+            return false;
+          default: return state.isLoading;
+        }
+      }()),
+      labels: (function() {
+        console.log('labels.labels reducer', state, action)
+        switch(action.type){
+          case getType(GraphActions.createLabelSuccess):
+            state.labels.set(action.payload.name, action.payload.nodeId);
+            return state.labels;
+          case getType(GraphActions.deleteLabelSuccess):
+            state.labels.delete(action.payload.name);
+            return state.labels;
+          case getType(GraphActions.updateLabelSuccess):
+            if(state.labels.get(action.payload.prevName)){
+              state.labels.delete(action.payload.prevName);
+            }
+            state.labels.set(action.payload.name, action.payload.nodeId);
+            return state.labels;
+          case getType(GraphActions.createLabelFailure):
+          case getType(GraphActions.deleteLabelFailure):
+          case getType(GraphActions.updateLabelFailure):
+            console.error('Error from api call --', action.payload)
+          default: return state.labels; // no changes
+        }
+      }()),
     }
   }
 })
