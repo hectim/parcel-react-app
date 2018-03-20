@@ -30,8 +30,7 @@ export function LabelsReducer(state: LabelState = InitialLabelState, action: Roo
         isLoading: true,
       }
     case getType(GraphActions.createLabelSuccess):
-      console.log('LOOOOOOK here: ', state)
-      state.labels[action.payload.name as string] = action.payload.nodeId as number;
+      state.labels.set(action.payload.img as string, action.payload.nodeId as number)
       return {
         ...state,
         isLoading: false,
@@ -58,7 +57,8 @@ export function LabelsReducer(state: LabelState = InitialLabelState, action: Roo
         isLoading: true,
       }
     case getType(GraphActions.updateLabelSuccess):
-      state.labels[action.payload.name] = action.payload.nodeId;
+      state.labels.delete(action.payload.prevImg as string);
+      state.labels.set(action.payload.img as string, action.payload.nodeId as number)
       return {
         ...state,
         isLoading: false,
@@ -85,7 +85,7 @@ export function LabelsReducer(state: LabelState = InitialLabelState, action: Roo
         isLoading: true,
       }
     case getType(GraphActions.deleteLabelSuccess):
-      state.labels[action.payload.name] = action.payload.nodeId;
+      state.labels.delete(action.payload.img as string)
       return {
         ...state,
         isLoading: false,

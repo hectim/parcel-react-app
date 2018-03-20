@@ -23,6 +23,8 @@ interface PropsFromState {
 
 interface PropsFromDispatch {
   requestAddNode: () => void;
+  requestRemoveNode: (node: Node) => void;
+  requestUpdateNode: (node: Node) => void;
   createLabelRequest: () => void;
   deleteLabelRequest: (label: Label) => void;
   updateLabelRequest: (label: Label) => void;
@@ -116,6 +118,8 @@ function mapStateToProps(state: RootState): PropsFromState {
 function mapDispatchToProps(dispatch: Dispatch<RootState>): PropsFromDispatch {
   return bindActionCreators({
     requestAddNode: GraphActions.requestAddNode,
+    requestRemoveNode: GraphActions.requestRemoveNode,
+    requestUpdateNode: GraphActions.requestUpdateNode,
     createLabelRequest: GraphActions.createLabelRequest,
     deleteLabelRequest: GraphActions.deleteLabelRequest,
     updateLabelRequest: GraphActions.updateLabelRequest,
