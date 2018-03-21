@@ -1,9 +1,9 @@
 import { combineEpics } from 'redux-observable';
 
-import { nodeEpics } from './nodes.ts';
-import { labelEpics } from './labels.ts';
+import { NodeEpics } from './nodes';
+import { LabelEpics } from './labels';
 
 export const RootGraphEpics = combineEpics(
-  nodeEpics,
-  labelEpics,
+  NodeEpics,
+  LabelEpics,
 )

@@ -121,7 +121,6 @@ function mapDispatchToProps(dispatch: Dispatch<RootState>): PropsFromDispatch {
     requestAddNode: GraphActions.requestAddNode,
     requestRemoveNode: GraphActions.requestRemoveNode,
     requestUpdateNode: GraphActions.requestUpdateNode,
-    requestUpdateNode: GraphActions.requestUpdateNode,
     createLabelRequest: GraphActions.createLabelRequest,
     deleteLabelRequest: GraphActions.deleteLabelRequest,
     updateLabelRequest: GraphActions.updateLabelRequest,

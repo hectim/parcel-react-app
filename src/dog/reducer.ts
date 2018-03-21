@@ -25,6 +25,7 @@ export const DogReducer = combineReducers<RootAction>({
         return true;
       case getType(DogActions.dogSuccess):
       case getType(DogActions.dogFailure):
+      case getType(DogActions.dogCancel):
         return false;
       default: return state;
     }
