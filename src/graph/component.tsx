@@ -23,8 +23,8 @@ interface PropsFromState {
 
 interface PropsFromDispatch {
   requestAddNode: () => void;
-  requestRemoveNode: (node: Node) => void;
-  requestUpdateNode: (node: Node) => void;
+  requestRemoveNode: (node: GraphNode) => void;
+  requestUpdateNode: (node: GraphNode) => void;
   createLabelRequest: () => void;
   deleteLabelRequest: (label: Label) => void;
   updateLabelRequest: (label: Label) => void;
@@ -67,7 +67,7 @@ class Graph extends React.Component<ReduxProps, {}> {
       nodeDisplay.push(
         <div key={i}>type: {node.type} -- img: {node.img}
           <button key={i.toString()+'update'} onClick={() => requestUpdateNode(node)}>Update</button>
-          <button key={i.toString()+'delete'} onClick={() => requestDeleteNode(node)}>Delete</button>
+          <button key={i.toString()+'delete'} onClick={() => requestRemoveNode(node)}>Delete</button>
         </div>
       )
     })

@@ -13,12 +13,12 @@ export const failureAddNode = createAction('GRAPH_FAILURE_ADD_NODE', (error: str
   payload: error,
 }));
 
-export const requestRemoveNode = createAction('GRAPH_REQUEST_REMOVE_NODE', (node: Node) => ({
+export const requestRemoveNode = createAction('GRAPH_REQUEST_REMOVE_NODE', (node: GraphNode) => ({
   type: 'GRAPH_REQUEST_REMOVE_NODE',
   payload: node
 }));
 export const cancelRemoveNode = createAction('GRAPH_CANCEL_REMOVE_NODE');
-export const successRemoveNode = createAction('GRAPH_REMOVE_NODE', (node: Node) => ({
+export const successRemoveNode = createAction('GRAPH_REMOVE_NODE', (node: GraphNode) => ({
   type: 'GRAPH_REMOVE_NODE',
   payload: node,
 }));
@@ -28,7 +28,7 @@ export const failureRemoveNode = createAction('GRAPH_FAILURE_REMOVE_NODE', (erro
 }));
 
 
-export const requestUpdateNode = createAction('GRAPH_REQUEST_UPDATE_NODE', (node: Node) => ({
+export const requestUpdateNode = createAction('GRAPH_REQUEST_UPDATE_NODE', (node: GraphNode) => ({
   type: 'GRAPH_REQUEST_UPDATE_NODE',
   payload: node
 }));
