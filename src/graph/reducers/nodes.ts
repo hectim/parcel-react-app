@@ -21,6 +21,12 @@ export const InitialNodeState: NodeState = {
 
 export function NodesReducer(state: NodeState = InitialNodeState, action: RootAction) {
   switch(action.type) {
+    case getType(GraphActions.globalCancelNode):
+      return {
+        ...state,
+        isLoading: false
+      }
+
     /*              */
     /* CREATE NODE  */
     /*              */

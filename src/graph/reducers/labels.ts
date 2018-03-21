@@ -20,7 +20,11 @@ export const InitialLabelState: LabelState = {
 
 export function LabelsReducer(state: LabelState = InitialLabelState, action: RootAction) {
   switch(action.type) {
-
+    case getType(GraphActions.globalCancelLabel):
+      return {
+        ...state,
+        isLoading: false,
+      }
     /*              */
     /* CREATE LABEL */
     /*              */

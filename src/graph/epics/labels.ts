@@ -19,6 +19,7 @@ const createLabelEpic: Epic<RootAction, RootState> = (action$, store) => action$
       .ajax({crossDomain: true, method: 'GET', url: 'https://dog.ceo/api/breeds/image/random'})
       //.delay(2000)
       .takeUntil(action$.filter(isActionOf(GraphActions.createLabelCancel)))
+      .takeUntil(action$.filter(isActionOf(GraphActions.globalCancelLabel)))
       .map(res => ({ img: res.response.message, nodeId: 1 }) as Label)
       .do(test => { console.log('lol', test) })
       .map(myLabel => GraphActions.createLabelSuccess(myLabel))
@@ -31,6 +32,7 @@ const deleteLabelEpic: Epic<RootAction, RootState> = (action$, store) => action$
   .debounceTime(400)
   .delay(1000)
   .takeUntil(action$.filter(isActionOf(GraphActions.deleteLabelCancel)))
+  .takeUntil(action$.filter(isActionOf(GraphActions.globalCancelLabel)))
   .map(action => GraphActions.deleteLabelSuccess({...action.payload} as Label))
   .catch(error => Observable.of(GraphActions.deleteLabelFailure(error)))
 
@@ -42,6 +44,7 @@ const updateLabelEpic: Epic<RootAction, RootState> = (action$, store) => action$
       .ajax({crossDomain: true, method: 'GET', url: 'https://dog.ceo/api/breeds/image/random'})
       //.delay(2000)
       .takeUntil(action$.filter(isActionOf(GraphActions.updateLabelCancel)))
+      .takeUntil(action$.filter(isActionOf(GraphActions.globalCancelLabel)))
       .map(res => ({ img: res.response.message, nodeId: 1, prevImg: action.payload.img}) as UpdateLabel)
       .map(myLabel => GraphActions.updateLabelSuccess(myLabel))
       .catch(error => Observable.of(GraphActions.updateLabelFailure(error)))

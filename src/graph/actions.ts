@@ -1,6 +1,7 @@
 import { createAction } from 'typesafe-actions';
 import { GraphNode, Label, UpdateLabel, UpdateGraphNode } from './types';
 
+export const globalCancelNode = createAction('GRAPH_GLOBAL_CANCEL_NODE');
 // Add Node
 export const requestAddNode = createAction('GRAPH_REQUEST_ADD_NODE');
 export const cancelAddNode = createAction('GRAPH_CANCEL_ADD_NODE');
@@ -43,6 +44,7 @@ export const failureUpdateNode = createAction('GRAPH_FAILURE_UPDATE_NODE', (erro
 }));
 
 // Add Label (map of label name to nodeids)
+export const globalCancelLabel = createAction('GRAPH_GLOBAL_CANCEL_LABEL');
 export const createLabelRequest = createAction('GRAPH_CREATE_LABEL_REQUEST')
 export const createLabelSuccess = createAction('GRAPH_CREATE_LABEL_SUCCESS', (label: Label) => ({
   type: 'GRAPH_CREATE_LABEL_SUCCESS',
