@@ -1,4 +1,5 @@
 import { getType } from 'typesafe-actions';
+import * as _ from 'lodash';
 
 import { RootAction } from '../../rootAction';
 import * as GraphActions from '../actions';
@@ -50,6 +51,55 @@ export function NodesReducer(state: NodeState = InitialNodeState, action: RootAc
         errorMsg: action.payload
       }
 
+    case getType(GraphActions.requestRemoveNode):
+      return {
+        ...state,
+        isLoading: true,
+      }
+    case getType(GraphActions.cancelRemoveNode):
+      return {
+        ...state,
+        isLoading: false,
+      }
+    case getType(GraphActions.successRemoveNode):
+      return {
+        ...state,
+        isLoading: false,
+        nodes: [ ...state.nodes, action.payload ],
+      }
+    case getType(GraphActions.failureRemoveNode):
+      return {
+        ...state,
+        isLoading: false,
+        errorMsg: action.payload,
+      }
+
+    case getType(GraphActions.requestUpdateNode):
+      return {
+        ...state,
+        isLoading: true,
+      }
+    case getType(GraphActions.cancelUpdateNode):
+      return {
+        ...state,
+        isLoading: false,
+      }
+    case getType(GraphActions.successUpdateNode):
+      let copy: GraphNode[] = [...state.nodes];
+      let index: number = _.findIndex(copy, { img: action.payload.prevImg });
+      let newNode: GraphNode = _.omit(action.payload, 'prevImg');
+      copy[index] = newNode
+      return {
+        ...state,
+        isLoading: false,
+        nodes: copy,
+      }
+    case getType(GraphActions.failureUpdateNode):
+      return {
+        ...state,
+        isLoading: false,
+        errorMsg: action.payload,
+      }
     default: return state;
   }
 };

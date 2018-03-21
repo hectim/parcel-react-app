@@ -23,6 +23,8 @@ interface PropsFromState {
 
 interface PropsFromDispatch {
   requestAddNode: () => void;
+  requestRemoveNode: (node: Node) => void;
+  requestUpdateNode: (node: Node) => void;
   createLabelRequest: () => void;
   deleteLabelRequest: (label: Label) => void;
   updateLabelRequest: (label: Label) => void;
@@ -42,7 +44,7 @@ class Graph extends React.Component<ReduxProps, {}> {
   }
 
   render() {
-    const { nodes, nodeLoading, labelLoading, labels, requestAddNode, createLabelRequest, deleteLabelRequest, updateLabelRequest } = this.props;
+    const { nodes, nodeLoading, labelLoading, labels, requestAddNode, requestRemoveNode, requestUpdateNode, createLabelRequest, deleteLabelRequest, updateLabelRequest } = this.props;
 
     let labelDisplay:JSX.Element[] = []
     labelDisplay.push(<div>Label Map:</div>)
@@ -64,7 +66,8 @@ class Graph extends React.Component<ReduxProps, {}> {
     nodes.forEach((node: GraphNode, i: number) => {
       nodeDisplay.push(
         <div key={i}>type: {node.type} -- img: {node.img}
-          <button>Request Update Node</button>
+          <button key={i.toString()+'update'} onClick={() => requestUpdateNode(node)}>Update</button>
+          <button key={i.toString()+'delete'} onClick={() => requestDeleteNode(node)}>Delete</button>
         </div>
       )
     })
@@ -116,6 +119,8 @@ function mapStateToProps(state: RootState): PropsFromState {
 function mapDispatchToProps(dispatch: Dispatch<RootState>): PropsFromDispatch {
   return bindActionCreators({
     requestAddNode: GraphActions.requestAddNode,
+    requestRemoveNode: GraphActions.requestRemoveNode,
+    requestUpdateNode: GraphActions.requestUpdateNode,
     createLabelRequest: GraphActions.createLabelRequest,
     deleteLabelRequest: GraphActions.deleteLabelRequest,
     updateLabelRequest: GraphActions.updateLabelRequest,

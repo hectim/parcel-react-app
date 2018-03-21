@@ -1,6 +1,5 @@
 import { createAction } from 'typesafe-actions';
-import { GraphNode, Label, UpdateLabel } from './types';
-
+import { GraphNode, Label, UpdateLabel, UpdateGraphNode } from './types';
 
 // Add Node
 export const requestAddNode = createAction('GRAPH_REQUEST_ADD_NODE');
@@ -11,6 +10,35 @@ export const successAddNode = createAction('GRAPH_ADD_NODE', (node: GraphNode) =
 }));
 export const failureAddNode = createAction('GRAPH_FAILURE_ADD_NODE', (error: string) => ({
   type: 'GRAPH_FAILURE_ADD_NODE',
+  payload: error,
+}));
+
+export const requestRemoveNode = createAction('GRAPH_REQUEST_REMOVE_NODE', (node: Node) => ({
+  type: 'GRAPH_REQUEST_REMOVE_NODE',
+  payload: node
+}));
+export const cancelRemoveNode = createAction('GRAPH_CANCEL_REMOVE_NODE');
+export const successRemoveNode = createAction('GRAPH_REMOVE_NODE', (node: Node) => ({
+  type: 'GRAPH_REMOVE_NODE',
+  payload: node,
+}));
+export const failureRemoveNode = createAction('GRAPH_FAILURE_REMOVE_NODE', (error: string) => ({
+  type: 'GRAPH_FAILURE_REMOVE_NODE',
+  payload: error,
+}));
+
+
+export const requestUpdateNode = createAction('GRAPH_REQUEST_UPDATE_NODE', (node: Node) => ({
+  type: 'GRAPH_REQUEST_UPDATE_NODE',
+  payload: node
+}));
+export const cancelUpdateNode = createAction('GRAPH_CANCEL_UPDATE_NODE');
+export const successUpdateNode = createAction('GRAPH_UPDATE_NODE', (node: UpdateGraphNode) => ({
+  type: 'GRAPH_UPDATE_NODE',
+  payload: node,
+}));
+export const failureUpdateNode = createAction('GRAPH_FAILURE_UPDATE_NODE', (error: string) => ({
+  type: 'GRAPH_FAILURE_UPDATE_NODE',
   payload: error,
 }));
 
