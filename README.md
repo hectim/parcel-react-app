@@ -1,18 +1,3 @@
-#  gRPC Code Generation
-
-Now generate Typescript from your proto definitions:
-```bash
-protoc --plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts \
-  -I/usr/local/include \
-  -I. \
-  -I$GOPATH/src/git.tcncloud.net/m/protos/ \
-  -I$GOPATH/src/git.tcncloud.net/m/protos/matrix \
-  -I$GOPATH/src \
-  -I$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
---ts_out=service=true:proto labels.proto
-```
-
-
 ## Dog Saga - Redux-Saga Beginner Tutorial
 Unfortunately there are no up-to date examples of Typescript with Redux, thus, we have this library.   
 
@@ -33,6 +18,3 @@ First install node modules:
 `npm i`   
 Then start both the **typescript compiler** and **parcel bundler** in watch mode:   
 `npm run start`   
-
-**TODO** Why does the browser need a reload???
-
