@@ -75,11 +75,6 @@ class Graph extends React.Component<ReduxProps, {}> {
 
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to Graph Saga</h1>
-        </header>
-        <br />
 
         <div>
           <button onClick={requestAddNode}>Request Add Node</button>

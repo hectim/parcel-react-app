@@ -66,24 +66,25 @@ class Dog extends React.Component<ReduxProps, PropsFromComponent | ComponentLoca
           <img src={imgSrc || logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to Dog Saga</h1>
         </header>
+        <div style={{"marginTop":"-20px","background": "#f1f1f1", "paddingBottom":"50px"}}>
+          {imgSrc ? (
+            <p className="App-intro">Keep clicking for new dogs</p>
+          ) : (
+            <p className="App-intro">Replace the React icon with a dog!</p>
+          )}
 
-        {imgSrc ? (
-          <p className="App-intro">Keep clicking for new dogs</p>
-        ) : (
-          <p className="App-intro">Replace the React icon with a dog!</p>
-        )}
+          {fetching ? (
+            <button disabled>Fetching...</button>
+          ) : (
+            <button onClick={onRequestDog}>Request a Dog</button>
+          )}
 
-        {fetching ? (
-          <button disabled>Fetching...</button>
-        ) : (
-          <button onClick={onRequestDog}>Request a Dog</button>
-        )}
+          {error && <p style={{ color: "red" }}>Uh oh - something went wrong!</p>}
 
-        {error && <p style={{ color: "red" }}>Uh oh - something went wrong!</p>}
-
-        <button onClick={cancelRequestDog}>Cancel API call</button>
-        <br />
-        <button onClick={this.handleClick}>Click me to simulate an event</button>
+          <button onClick={cancelRequestDog}>Cancel API call</button>
+          <br />
+          <button onClick={this.handleClick}>Click me to simulate an event</button>
+      </div>
       </div>
     );
   }
