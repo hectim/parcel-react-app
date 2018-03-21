@@ -21,11 +21,6 @@ export const InitialNodeState: NodeState = {
 
 export function NodesReducer(state: NodeState = InitialNodeState, action: RootAction) {
   switch(action.type) {
-    case getType(GraphActions.globalCancelNode):
-      return {
-        ...state,
-        isLoading: false
-      }
 
     /*              */
     /* CREATE NODE  */
@@ -34,11 +29,6 @@ export function NodesReducer(state: NodeState = InitialNodeState, action: RootAc
       return {
         ...state,
         isLoading: true
-      }
-    case getType(GraphActions.cancelAddNode):
-      return {
-        ...state,
-        isLoading: false
       }
     case getType(GraphActions.successAddNode):
       // clone array
@@ -62,11 +52,6 @@ export function NodesReducer(state: NodeState = InitialNodeState, action: RootAc
         ...state,
         isLoading: true,
       }
-    case getType(GraphActions.cancelRemoveNode):
-      return {
-        ...state,
-        isLoading: false,
-      }
     case getType(GraphActions.successRemoveNode):
       let aIndex: number | undefined = _.findIndex(state.nodes, action.payload)
       return {
@@ -86,11 +71,6 @@ export function NodesReducer(state: NodeState = InitialNodeState, action: RootAc
       return {
         ...state,
         isLoading: true,
-      }
-    case getType(GraphActions.cancelUpdateNode):
-      return {
-        ...state,
-        isLoading: false,
       }
     case getType(GraphActions.successUpdateNode):
       let copy: GraphNode[] = [...state.nodes];

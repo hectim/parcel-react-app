@@ -22,20 +22,12 @@ interface PropsFromState {
 };
 
 interface PropsFromDispatch {
-  globalCancelNode: () => void;
-  globalCancelLabel: () => void;
   requestAddNode: () => void;
-  cancelAddNode: () => void;
   requestRemoveNode: (node: GraphNode) => void;
-  cancelRemoveNode: () => void;
   requestUpdateNode: (node: GraphNode) => void;
-  cancelUpdateNode: () => void;
   createLabelRequest: () => void;
-  createLabelCancel: () => void;
   deleteLabelRequest: (label: Label) => void;
-  deleteLabelCancel: () => void;
   updateLabelRequest: (label: Label) => void;
-  updateLabelCancel: () => void;
   // another example:
   // onRequestGraph: (value:string) => void;
 }
@@ -52,7 +44,7 @@ class Graph extends React.Component<ReduxProps, {}> {
   }
 
   render() {
-    const { nodes, nodeLoading, labelLoading, labels, requestAddNode, cancelAddNode, requestRemoveNode, cancelRemoveNode, requestUpdateNode, cancelUpdateNode, createLabelRequest, createLabelCancel, deleteLabelRequest, deleteLabelCancel, updateLabelRequest, updateLabelCancel, globalCancelNode, globalCancelLabel } = this.props;
+    const { nodes, nodeLoading, labelLoading, labels, requestAddNode, requestRemoveNode, requestUpdateNode, createLabelRequest, deleteLabelRequest, updateLabelRequest } = this.props;
 
     let labelDisplay:JSX.Element[] = []
     labelDisplay.push(<div>Label Map:</div>)
@@ -65,8 +57,6 @@ class Graph extends React.Component<ReduxProps, {}> {
           <button key={value+'delete'} onClick={() => deleteLabelRequest(
             { img: key, nodeId: value }
           )}>Delete</button>
-          <button key={value+'cancel'} onClick={() => globalCancelLabel(
-          )}>Cancel</button>
         </div>
       )
     })
@@ -78,7 +68,6 @@ class Graph extends React.Component<ReduxProps, {}> {
         <div key={i}>type: {node.type} -- img: {node.img}
           <button key={i.toString()+'update'} onClick={() => requestUpdateNode(node)}>Update</button>
           <button key={i.toString()+'delete'} onClick={() => requestRemoveNode(node)}>Delete</button>
-          <button key={i.toString()+'cancel'} onClick={() => globalCancelNode()}>Cancel</button>
         </div>
       )
     })
@@ -91,24 +80,18 @@ class Graph extends React.Component<ReduxProps, {}> {
         </header>
         <br />
 
-        {nodeLoading ? (
-          <button disabled>fetching...</button>
-        ) : (
-          <div>
-            <button onClick={requestAddNode}>Request Add Node</button>
-          </div>
-        )}
+        <div>
+          <button onClick={requestAddNode}>Request Add Node</button>
+          {nodeLoading && <button disabled>fetching...</button>}
+        </div>
         {nodeDisplay}
         <br />
         <br />
 
-        {labelLoading ? (
-        <button disabled>fetching...</button>
-        ) : (
         <div>
           <button onClick={createLabelRequest}>Request Create Label</button>
+          {labelLoading && <button disabled>fetching...</button>}
         </div>
-        )}
         {labelDisplay}
         <br />
       </div>
@@ -129,20 +112,12 @@ function mapStateToProps(state: RootState): PropsFromState {
 
 function mapDispatchToProps(dispatch: Dispatch<RootState>): PropsFromDispatch {
   return bindActionCreators({
-    globalCancelNode: GraphActions.globalCancelNode,
     requestAddNode: GraphActions.requestAddNode,
-    cancelAddNode: GraphActions.cancelAddNode,
     requestRemoveNode: GraphActions.requestRemoveNode,
-    cancelRemoveNode: GraphActions.cancelRemoveNode,
     requestUpdateNode: GraphActions.requestUpdateNode,
-    cancelUpdateNode: GraphActions.cancelUpdateNode,
-    globalCancelLabel: GraphActions.globalCancelLabel,
     createLabelRequest: GraphActions.createLabelRequest,
-    createLabelCancel: GraphActions.createLabelCancel,
     deleteLabelRequest: GraphActions.deleteLabelRequest,
-    deleteLabelCancel: GraphActions.deleteLabelCancel,
     updateLabelRequest: GraphActions.updateLabelRequest,
-    updateLabelCancel: GraphActions.updateLabelCancel,
   }, dispatch);
 }
 

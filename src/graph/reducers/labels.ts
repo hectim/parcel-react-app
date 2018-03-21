@@ -20,11 +20,7 @@ export const InitialLabelState: LabelState = {
 
 export function LabelsReducer(state: LabelState = InitialLabelState, action: RootAction) {
   switch(action.type) {
-    case getType(GraphActions.globalCancelLabel):
-      return {
-        ...state,
-        isLoading: false,
-      }
+
     /*              */
     /* CREATE LABEL */
     /*              */
@@ -45,11 +41,6 @@ export function LabelsReducer(state: LabelState = InitialLabelState, action: Roo
         ...state,
         isLoading: false,
         errorMsg: action.payload
-      }
-    case getType(GraphActions.createLabelCancel):
-      return {
-        ...state,
-        isLoading: false,
       }
 
     /*              */
@@ -74,11 +65,6 @@ export function LabelsReducer(state: LabelState = InitialLabelState, action: Roo
         isLoading: false,
         errorMsg: action.payload,
       }
-    case getType(GraphActions.updateLabelCancel):
-      return {
-        ...state,
-        isLoading: false,
-      }
 
     /*              */
     /* DELETE LABEL */
@@ -100,11 +86,6 @@ export function LabelsReducer(state: LabelState = InitialLabelState, action: Roo
         ...state,
         isLoading: false,
         errorMsg: action.payload,
-      }
-    case getType(GraphActions.deleteLabelCancel):
-      return {
-        ...state,
-        isLoading: false,
       }
 
     default: return state;

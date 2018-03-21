@@ -18,9 +18,6 @@ const createNodeEpic: Epic<RootAction, RootState> = (action$, store) => action$
   .flatMap(() => {
     return Observable
       .ajax({crossDomain: true, method: 'GET', url: 'https://dog.ceo/api/breeds/image/random'})
-    //.delay(2000)
-      .takeUntil(action$.filter(isActionOf(GraphActions.cancelAddNode)))
-      .takeUntil(action$.filter(isActionOf(GraphActions.globalCancelNode)))
       .map(res => ({ img: res.response.message, id: 400, type: 'pipeline'}) as GraphNode)
       .map(myNode => GraphActions.successAddNode(myNode))
       .catch(error => Observable.of(GraphActions.failureAddNode(error)))
@@ -30,9 +27,6 @@ const deleteNodeEpic: Epic<RootAction, RootState> = (action$, store) => action$
   .filter(isActionOf(GraphActions.requestRemoveNode))
   .do(() => { console.log('delete node epic', action$) })
   .debounceTime(400)
-  .delay(1000)
-  .takeUntil(action$.filter(isActionOf(GraphActions.cancelRemoveNode)))
-  .takeUntil(action$.filter(isActionOf(GraphActions.globalCancelNode)))
   .map(action => GraphActions.successRemoveNode({...action.payload} as GraphNode))
   .catch(error => Observable.of(GraphActions.failureRemoveNode(error)))
 
@@ -42,9 +36,6 @@ const updateNodeEpic: Epic<RootAction, RootState> = (action$, store) => action$
   .flatMap((action) => {
     return Observable
       .ajax({crossDomain: true, method: 'GET', url: 'https://dog.ceo/api/breeds/image/random'})
-    //.delay(2000)
-      .takeUntil(action$.filter(isActionOf(GraphActions.cancelUpdateNode)))
-      .takeUntil(action$.filter(isActionOf(GraphActions.globalCancelNode)))
       .map(res => ({ img: res.response.message, type: 'action', id: 13, prevImg: action.payload.img}) as UpdateGraphNode)
       .map(myNode => GraphActions.successUpdateNode(myNode))
       .catch(error => Observable.of(GraphActions.failureUpdateNode(error)))
