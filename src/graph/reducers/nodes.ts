@@ -62,10 +62,12 @@ export function NodesReducer(state: NodeState = InitialNodeState, action: RootAc
         isLoading: false,
       }
     case getType(GraphActions.successRemoveNode):
+      let aIndex: number | undefined = _.findIndex(state.nodes, action.payload)
       return {
         ...state,
         isLoading: false,
-        nodes: [ ...state.nodes, action.payload ],
+        nodes: [...state.nodes.slice(0, aIndex),
+                ...state.nodes.slice(aIndex+1)]
       }
     case getType(GraphActions.failureRemoveNode):
       return {
@@ -87,7 +89,7 @@ export function NodesReducer(state: NodeState = InitialNodeState, action: RootAc
     case getType(GraphActions.successUpdateNode):
       let copy: GraphNode[] = [...state.nodes];
       let index: number = _.findIndex(copy, { img: action.payload.prevImg });
-      let newNode: GraphNode = _.omit(action.payload, 'prevImg');
+      let newNode: GraphNode = { id: action.payload.id, img: action.payload.img, type: action.payload.type }
       copy[index] = newNode
       return {
         ...state,

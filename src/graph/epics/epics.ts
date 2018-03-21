@@ -42,7 +42,7 @@ const updateNodeEpic: Epic<RootAction, RootState> = (action$, store) => action$
       .ajax({crossDomain: true, method: 'GET', url: 'https://dog.ceo/api/breeds/image/random'})
     //.delay(2000)
       .takeUntil(action$.filter(isActionOf(GraphActions.cancelUpdateNode)))
-      .map(res => ({ img: res.response.messge, type: 'action', id: 13, prevImg: action.payload.img}) as UpdateGraphNode)
+      .map(res => ({ img: res.response.message, type: 'action', id: 13, prevImg: action.payload.img}) as UpdateGraphNode)
       .map(myNode => GraphActions.successUpdateNode(myNode))
       .catch(error => Observable.of(GraphActions.failureUpdateNode(error)))
   })
@@ -85,6 +85,8 @@ const updateLabelEpic: Epic<RootAction, RootState> = (action$, store) => action$
 
 export const RootGraphEpics = combineEpics(
   nodeEpics,
+  deleteNodeEpic,
+  updateNodeEpic,
   createLabelEpic,
   deleteLabelEpic,
   updateLabelEpic,
