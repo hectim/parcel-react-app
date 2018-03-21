@@ -50,11 +50,11 @@ class Graph extends React.Component<ReduxProps, {}> {
     labelDisplay.push(<div key="lap">Label Map:</div>)
     labels.forEach((value: number, key: string) => {
       labelDisplay.push(
-        <div key={value}> [ key:{key} - value:{value} ]
-          <button key={value+'update'} onClick={() => updateLabelRequest(
+        <div key={key}> [ key:{key} - value:{value} ]
+          <button key={key+'update'} onClick={() => updateLabelRequest(
             { img: key, nodeId: value }
           )}>Update</button>
-          <button key={value+'delete'} onClick={() => deleteLabelRequest(
+          <button key={key+'delete'} onClick={() => deleteLabelRequest(
             { img: key, nodeId: value }
           )}>Delete</button>
         </div>
@@ -64,7 +64,6 @@ class Graph extends React.Component<ReduxProps, {}> {
     let nodeDisplay:JSX.Element[] = []
     nodeDisplay.push(<div key="nar">Node Array:</div>)
     nodes.forEach((node: GraphNode, i: number) => {
-      console.log('check number', i)
       nodeDisplay.push(
         <div key={i}>type: {node.type} -- img: {node.img}
           <button key={i.toString()+'update'} onClick={() => requestUpdateNode(node)}>Update</button>

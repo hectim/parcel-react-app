@@ -26,7 +26,6 @@ const createLabelEpic: Epic<RootAction, RootState> = (action$, store) => action$
 const deleteLabelEpic: Epic<RootAction, RootState> = (action$, store) => action$
   .filter(isActionOf(GraphActions.deleteLabelRequest))
   .do(() => { console.log('delete label epic', action$) })
-  .debounceTime(400)
   .map(action => GraphActions.deleteLabelSuccess({...action.payload} as Label))
   .catch(error => Observable.of(GraphActions.deleteLabelFailure(error)))
 
@@ -43,6 +42,6 @@ const updateLabelEpic: Epic<RootAction, RootState> = (action$, store) => action$
 
 export const LabelEpics = combineEpics(
   createLabelEpic,
-  deleteLabelEpic,
   updateLabelEpic,
+  deleteLabelEpic,
 )

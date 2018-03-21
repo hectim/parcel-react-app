@@ -25,9 +25,9 @@ const createNodeEpic: Epic<RootAction, RootState> = (action$, store) => action$
 
 const deleteNodeEpic: Epic<RootAction, RootState> = (action$, store) => action$
   .filter(isActionOf(GraphActions.requestRemoveNode))
-  .do(() => { console.log('delete node epic', action$) })
+  .do((test) => { console.log('delete node epic', test) })
   .debounceTime(400)
-  .map(action => GraphActions.successRemoveNode({...action.payload} as GraphNode))
+  .map(action => GraphActions.successRemoveNode({ ...action.payload } as GraphNode))
   .catch(error => Observable.of(GraphActions.failureRemoveNode(error)))
 
 const updateNodeEpic: Epic<RootAction, RootState> = (action$, store) => action$
@@ -43,6 +43,6 @@ const updateNodeEpic: Epic<RootAction, RootState> = (action$, store) => action$
 
 export const NodeEpics = combineEpics(
   createNodeEpic,
-  deleteNodeEpic,
   updateNodeEpic,
+  deleteNodeEpic,
 )
