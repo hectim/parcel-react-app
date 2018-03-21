@@ -83,7 +83,7 @@ class Dog extends React.Component<ReduxProps, PropsFromComponent | ComponentLoca
 
           <button onClick={cancelRequestDog}>Cancel API call</button>
           <br />
-          <button onClick={this.handleClick}>Click me to simulate an event</button>
+          <button onClick={this.handleClick}>{this.state.localStateExample}</button>
       </div>
       </div>
     );
