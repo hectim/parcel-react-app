@@ -5,6 +5,7 @@
   "private": true,
   "devDependencies": {
     "babel-cli": "6.26.0",
+    "babel-core": "^6.26.3",
     "babel-plugin-autobind-class-methods": "5.0.1",
     "babel-plugin-transform-class-properties": "6.24.1",
     "babel-plugin-transform-object-rest-spread": "6.26.0",
@@ -25,7 +26,7 @@
     "@types/webpack-env": "1.13.5",
     "axios": "0.17.1",
     "lodash": "4.17.5",
-    "parcel-bundler": "1.6.2",
+    "parcel-bundler": "1.10.0",
     "react": "16.2.0",
     "react-dom": "16.2.0",
     "react-redux": "5.0.6",
